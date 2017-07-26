@@ -2,10 +2,7 @@
 layout: page
 title: R for reproducible scientific analysis
 ---
-
-**Introduction to R for social scientists using the Gapminder dataset**
-
-This is a two-day intensive introduction to modern computational techniques for data management, analysis, and visualization with an emphasis on the programming language R. The course assumes no prior programming knowledge. By the end of the workshop, participants will be able to efficiently organize and clean data, manipulate data frames, estimate and work with statistical models, produce a variety of publication-quality plots, and compose dynamic documents that integrate writing, code, and code output.
+This is a tutorial for EDAMAME that is based on Data Carpentry material (http://data-lessons.github.io/gapminder-R).
 
 ### Topics
 
