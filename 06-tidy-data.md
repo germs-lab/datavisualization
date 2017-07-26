@@ -30,7 +30,8 @@ An example will clarify. Download [this fake data](https://raw.githubusercontent
 
 
 ~~~{.r}
-blood <- read_csv('data/wide_eg.csv')
+download.file("https://raw.githubusercontent.com/germs-lab/gapminder-R/master/data/wide_eg.csv", destfile="wide_eg.csv", method="auto")
+blood <- read_csv('wide_eg.csv')
 blood
 ~~~
 
@@ -62,7 +63,7 @@ Hmm, that doesn't look quite right? What do you think happened? How could we fix
 
 
 ~~~{.r}
-blood <- read_csv('data/wide_eg.csv', skip = 2)
+blood <- read_csv('wide_eg.csv', skip = 2)
 blood
 ~~~
 
@@ -120,7 +121,7 @@ toupper(blood$sex)
 blood$sex = toupper(blood$sex)
 # Or, using dplyr:
 blood = mutate(blood, sex = toupper(sex))
-# Note that those accomplish the exact same thing in very different ways. Studying the difference may be useful. 
+# Note that those accomplish the exact same thing in very different ways. Studying the difference may be useful.
 blood
 ~~~
 
@@ -145,9 +146,9 @@ blood
 
 ~~~
 
-It looks like we've got 12 individuals, each subjected to three conditions -- a control and two treatments. Each observation here is a person in a treatment (we don't know what the measured value is), so each row should be defined by a person-treatment; that is, we should have 12 rows with four columns: subject, sex, condition, and the measured value. 
+It looks like we've got 12 individuals, each subjected to three conditions -- a control and two treatments. Each observation here is a person in a treatment (we don't know what the measured value is), so each row should be defined by a person-treatment; that is, we should have 12 rows with four columns: subject, sex, condition, and the measured value.
 
-#### `gather()` 
+#### `gather()`
 
 A typical analysis of data like these consists of calculating means and standard deviations by condition and sex. It is possible to do this with the data in their current form, but it will be much easier if we tidy the data first.
 
@@ -229,8 +230,8 @@ ggplot(blood.tidy, aes(x = condition, y = albumin, color = sex)) +
 
 > #### Challenge -- Gather and plot {.challenge}
 >
-> The following code produces a data.frame with the annual relative standard deviation of gdp among countries, both by per-capita gdp and country-total gdp. Run the code. Is the resulting dataset in tidy form? 
-> 
+> The following code produces a data.frame with the annual relative standard deviation of gdp among countries, both by per-capita gdp and country-total gdp. Run the code. Is the resulting dataset in tidy form?
+>
 > ```
 > gapminder %>%
 >     mutate(gdpCountry = gdpPercap * pop) %>%
@@ -240,7 +241,7 @@ ggplot(blood.tidy, aes(x = condition, y = albumin, color = sex)) +
 > ```
 >
 > You could argue that it is or is not in tidy form, because you could see the two outcomes as different variables or two ways of measuring the same variable. For our purposes, consider them two ways of measuring the same variable and `gather` the data.frame so that there is only one measurement of RSD on each row.
-> 
+>
 > Make a plot with two lines, one for each measure of RSD in gdp, by year. To make the plot black-and-white-printer friendly, distinguish the lines using the `linetype` **aes**thetic. Could you have made this plot without tidying the data? Why or why not?
 >
 
