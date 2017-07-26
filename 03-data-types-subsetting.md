@@ -28,7 +28,7 @@ R has a variety functions to load specific kinds of data, e.g. `read.csv` to rea
 
 ~~~{.r}
 download.file("https://github.com/germs-lab/gapminder-R/blob/master/data/continents.RDA?raw=true", destfile="continents.RDA", method="auto")
-load('data/continents.RDA')
+load('continents.RDA')
 ~~~
 
 ### Intro to data.frames
