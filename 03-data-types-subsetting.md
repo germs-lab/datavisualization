@@ -437,27 +437,34 @@ continents$area_km2[continents$continent == "Africa"]
 
 The `continents` data.frame was useful for learning because it was so small, but it's time to graduate to something more interesting and realistic. Data come in many forms, and we need to be able to load them in R. For our own use and with others who use R, there are R-specific data structures we can use, like the .RDA file-type we just saw, but we need to be able to work with more general data types too. Comma-separated value (csv) tables are perhaps the most universal data structure. 
 
-The gapminder dataset provides country-by-year level data on gdp, population, and longevity. I downloaded it and put it in the data directory of my project. You will do the same in a minute.
-
-We can read csv's with the `read.csv` function. The argument to `read.csv` is the location of the file, relative to your working directory. Since I saved the gapminder data to the `data` directory of my project, I can load it with this. Note the use of tab-completion to find the file and get it exactly right without typos. 
+The gapminder dataset provides country-by-year level data on gdp, population, and longevity. Let's first download it.
 
 
 ~~~{.r}
-read.csv('data/gapminder-FiveYearData.csv')
+download.file("https://raw.githubusercontent.com/germs-lab/gapminder-R/master/data/raw_data/gapminder.csv", destfile="gapminder.csv", method="auto")
+~~~
+
+You can look at it by doubleclicking on the filename on the bottom right screen.  
+
+We can read csv's with the `read.csv` function. Note the use of tab-completion to find the file and get it exactly right without typos. 
+
+
+~~~{.r}
+read.csv('gapminder.csv')
 ~~~
 
 Whoa! What just happened? R executed the function and printed the result, just like when you enter `log(1)`. How do you store an object to a variable?
 
 
 ~~~{.r}
-gapminder <- read.csv('data/gapminder-FiveYearData.csv')
+gapminder <- read.csv('gapminder.csv')
 ~~~
 
 
 
 ~~~{.output}
-Warning in file(file, "rt"): cannot open file 'data/gapminder-
-FiveYearData.csv': No such file or directory
+Warning in file(file, "rt"): cannot open file 'gapminder.csv': No such file
+or directory
 
 ~~~
 
@@ -470,18 +477,5 @@ Error in file(file, "rt"): cannot open the connection
 
 Now, a data.frame called `gapminder` is in my Environment, and I can see that it is a data.frame with 1704 rows and 6 columns. 
 
-> #### Challenge -- read csv data {.challenge}
->
-> The gapminder data are available at [this link](https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv).  
-> - Right click on the link to "save file as..."  
-> - Save the .csv file in the `/data` directory of your project.  
-> - Read the data with the `read.csv` function and assign it to the variable `gapminder`.  
-> - Inspect the data.frame using the `summary` function. What is the most recent year for which we have data? 
-> 
-> **Advanced challenge**
->
-> Suppose you get a .csv file from a colleague in Europe. Because they use "," (comma) as a decimal separator, they use ";" (semi-colons) to separate fields. How can you read it into R? 
->
-> Feel free to use the web and/or R's helpfiles.    
->
+
 

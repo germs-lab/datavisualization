@@ -531,20 +531,25 @@ d. 100</p>
 
 <p>The <code>continents</code> data.frame was useful for learning because it was so small, but it&#39;s time to graduate to something more interesting and realistic. Data come in many forms, and we need to be able to load them in R. For our own use and with others who use R, there are R-specific data structures we can use, like the .RDA file-type we just saw, but we need to be able to work with more general data types too. Comma-separated value (csv) tables are perhaps the most universal data structure. </p>
 
-<p>The gapminder dataset provides country-by-year level data on gdp, population, and longevity. I downloaded it and put it in the data directory of my project. You will do the same in a minute.</p>
+<p>The gapminder dataset provides country-by-year level data on gdp, population, and longevity. Let&#39;s first download it.</p>
 
-<p>We can read csv&#39;s with the <code>read.csv</code> function. The argument to <code>read.csv</code> is the location of the file, relative to your working directory. Since I saved the gapminder data to the <code>data</code> directory of my project, I can load it with this. Note the use of tab-completion to find the file and get it exactly right without typos. </p>
+<pre><code class="r">download.file(&quot;https://raw.githubusercontent.com/germs-lab/gapminder-R/master/data/raw_data/gapminder.csv&quot;, destfile=&quot;gapminder.csv&quot;, method=&quot;auto&quot;)
+</code></pre>
 
-<pre><code class="r">read.csv(&#39;data/gapminder-FiveYearData.csv&#39;)
+<p>You can look at it by doubleclicking on the filename on the bottom right screen.  </p>
+
+<p>We can read csv&#39;s with the <code>read.csv</code> function. Note the use of tab-completion to find the file and get it exactly right without typos. </p>
+
+<pre><code class="r">read.csv(&#39;gapminder.csv&#39;)
 </code></pre>
 
 <p>Whoa! What just happened? R executed the function and printed the result, just like when you enter <code>log(1)</code>. How do you store an object to a variable?</p>
 
-<pre><code class="r">gapminder &lt;- read.csv(&#39;data/gapminder-FiveYearData.csv&#39;)
+<pre><code class="r">gapminder &lt;- read.csv(&#39;gapminder.csv&#39;)
 </code></pre>
 
-<pre><code class="output">Warning in file(file, &quot;rt&quot;): cannot open file &#39;data/gapminder-
-FiveYearData.csv&#39;: No such file or directory
+<pre><code class="output">Warning in file(file, &quot;rt&quot;): cannot open file &#39;gapminder.csv&#39;: No such file
+or directory
 
 </code></pre>
 
@@ -553,25 +558,6 @@ FiveYearData.csv&#39;: No such file or directory
 </code></pre>
 
 <p>Now, a data.frame called <code>gapminder</code> is in my Environment, and I can see that it is a data.frame with 1704 rows and 6 columns. </p>
-
-<blockquote>
-<h4>Challenge &ndash; read csv data {.challenge}</h4>
-
-<p>The gapminder data are available at <a href="https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv">this link</a>.  </p>
-
-<ul>
-<li>Right click on the link to &ldquo;save file as&hellip;&rdquo;<br/></li>
-<li>Save the .csv file in the <code>/data</code> directory of your project.<br/></li>
-<li>Read the data with the <code>read.csv</code> function and assign it to the variable <code>gapminder</code>.<br/></li>
-<li>Inspect the data.frame using the <code>summary</code> function. What is the most recent year for which we have data? </li>
-</ul>
-
-<p><strong>Advanced challenge</strong></p>
-
-<p>Suppose you get a .csv file from a colleague in Europe. Because they use &ldquo;,&rdquo; (comma) as a decimal separator, they use &ldquo;;&rdquo; (semi-colons) to separate fields. How can you read it into R? </p>
-
-<p>Feel free to use the web and/or R&#39;s helpfiles.    </p>
-</blockquote>
 
 </body>
 
