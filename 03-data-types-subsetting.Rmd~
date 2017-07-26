@@ -28,6 +28,7 @@ source("tools/chunk-options.R")
 R has a variety functions to load specific kinds of data, e.g. `read.csv` to read a comma-separated value table. Two R-specific data-types are `.RDA` and `.RDS`. `.RDA` files, like the one you just saved, are created with the `save` function and accessed with the `load` function. Load needs the location of the saved file, provided as character string file-path, starting with the working directory. We won't get into working directories now, except to say that RStudio's projects makes this easier, by making the location of your project (where the `.Rproj` file is located) the default working directory. It is displayed at the top of your console pane in RStudio. File-paths should be provided relative to that location. So, to load the file we just saved:
 
 ```{r load data}
+download.file("https://github.com/data-lessons/gapminder-R/blob/gh-pages/data/continents.RDA?raw=true", destfile="continents.RDA", method="auto")
 load('data/continents.RDA')
 ```
 
