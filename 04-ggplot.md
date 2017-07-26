@@ -42,9 +42,9 @@ and a set of **geoms**--the visual representation of data points.
 You first have to load it in your R session. For that, use the `library` function:
 
 
-```r
+~~~{.r}
 library(tidyverse)
-```
+~~~
 
 ### First plots
 
@@ -54,27 +54,33 @@ just like you might do in an image editing program like Photoshop, Illustrator, 
 Let's start off with an example, longevity as a function of gdp:
 
 
-```r
+~~~{.r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
   geom_point()
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 The first thing we do is call the `ggplot` function. This function tells ggplot what dataset we're using (gapminder) and how to map variables in gapminder to the plotting "canvas" (gdp to the x-axis, life expectancy to the y-axis). That **mapping** of variables to plot elements is done through the `aes` function. Arguments to `aes` will be variable names from the `data.frame` passed to `ggplot`. If you need a reminder of what's in our data.frame, use `str(gapminder)`.
 
 By itself, the call to `ggplot` isn't enough to draw a figure. This sets up the canvas correctly, but it doesn't draw anything on it.
 
 
-```r
+~~~{.r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp))
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 Now we need to tell `ggplot` how to draw the data. For that, we add another layer: a **geom**.
 In our example, we used `geom_point`, which tells `ggplot` we want to draw a point for each row in the dataset.
@@ -82,14 +88,17 @@ In our example, we used `geom_point`, which tells `ggplot` we want to draw a poi
 Note that we tell R that multiple lines belong to `ggplot` by including a `+` at the end of each line except the last.
 
 
-```r
+~~~{.r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
   geom_point()
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 > #### Challenge -- Changing a variable {.challenge}
 >
@@ -97,10 +106,10 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
 > changed over time:
 >
 > 
-> ```r
+> ~~~{.r}
 > ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
 > geom_point()
-> ```
+> ~~~
 >
 > Hint: Inspect the data with `head(gapminder)` or `str(gapminder)` to find
 > the name of the variable representing time. It should go on the x-axis.
@@ -119,59 +128,71 @@ Let's add another layer to the plot -- lines connecting the points representing
 each country:
 
 
-```r
+~~~{.r}
 ggplot(gapminder, aes(x = year, y = lifeExp, color = continent)) +
     geom_point() +
     geom_line()
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 Hmm, that's not quite right. What has happened there? How many lines are there?
 
 The lines are grouped by continent. We wanted one line per country, but we got one line per continent because we mapped continent to color and `ggplot` assumes we want to group by the coloring variable unless we tell it otherwise. To get one line per country we tell ggplot explicitly to group by country. Just like the other aesthetic mappings, that goes in the `aes()` function:
 
 
-```r
+~~~{.r}
 ggplot(gapminder,
        aes(x = year, y = lifeExp, color = continent, group = country)) +
     geom_point() +
     geom_line()
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 Note that aesthetic mappings in the top-line `ggplot` call apply to all layers,
 but you can also map variables just within a single layer. For example, if we
 want colored lines but black points, we can move the mapping of continent-to-color from the `ggplot` line to the `geom_line`, so that it no longer applies to `geom_point`.
 
 
-```r
+~~~{.r}
 ggplot(gapminder, aes(x = year, y = lifeExp, group = country)) +
     geom_point() +
     geom_line(aes(color = continent))
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 Note that each layer is drawn on top of the previous layer. If we want the points on top of the lines, we can move `geom_point` to after `geom_line`:
 
 
-```r
+~~~{.r}
 ggplot(gapminder, aes(x = year, y=lifeExp, by=country)) +
     geom_line(aes(color = continent)) +
     geom_point()
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 ### Continuous vs. discrete variables
 
@@ -184,14 +205,17 @@ The plots we have done so far have plotted numeric variables to both axes. What 
 One possibility is a boxplot. In a boxplot, the distribution of values for each category is displayed, with the central line at the median value, the box representing the inner-50%, etc.
 
 
-```r
+~~~{.r}
 ggplot(gapminder, aes(x = continent, y = lifeExp)) +
     geom_boxplot()
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 
 > #### Challenge -- A new geom {.challenge}
@@ -210,14 +234,17 @@ ggplot(gapminder, aes(x = continent, y = lifeExp)) +
 The grammar of graphics makes it easy to transform the scales on which the data are presented. To demonstrate we'll go back to our first example:
 
 
-```r
+~~~{.r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
     geom_point()
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 Currently it's hard to see the relationship between the points due to some strong
 outliers in GDP per capita. We can change the scale of units on the x-axis using
@@ -231,15 +258,18 @@ of 1,000 is now 3 on the x-axis, a value of 10,000 corresponds to 4 on the x-axi
 x-axis.
 
 
-```r
+~~~{.r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
     geom_point() +
     scale_x_log10()
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 
 
@@ -249,16 +279,19 @@ We can fit a simple, linear relationship to the data by adding another layer,
 `geom_smooth`, which adds a summary of a fit model to the plot. `method = 'lm'` tells `geom_smooth` to fit a **l**inear **m**odel. We could also fit other, more flexible smoothers by specifying different methods in `geom_smooth`.
 
 
-```r
+~~~{.r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
     geom_point() +
     scale_x_log10() +
     geom_smooth(method = 'lm')
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 > #### Challenge -- The power of money, by continent {.challenge}
 >
@@ -271,40 +304,51 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
 Some people like the gray `ggplot` background, others call it "chart junk" -- distracting, uninformative ink. You can change the overall appearance of a plot by setting a new theme. E.g. `theme_bw` is a bit cleaner:
 
 
-```r
+~~~{.r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
     geom_point(aes(color = continent)) +
     scale_x_log10() +
     geom_smooth(method = 'lm') +
     theme_bw()
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 There are a variety of themes in a separate package called `ggthemes`, e.g. we can mimic The Economist [or many others](https://github.com/jrnold/ggthemes). Of course before we use the `ggthemes` package, we have to install it, which you can do with `install.packages('ggthemes')`.
 
 
-```r
+~~~{.r}
 library(ggthemes)
-```
+~~~
 
-```
-## Error in library(ggthemes): there is no package called 'ggthemes'
-```
 
-```r
+
+~~~{.output}
+Error in library(ggthemes): there is no package called 'ggthemes'
+
+~~~
+
+
+
+~~~{.r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
     geom_point(aes(color = continent)) +
     scale_x_log10() +
     geom_smooth(method = 'lm') +
     theme_economist()
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 
 #### Changing fixed aspects of plots
@@ -315,17 +359,20 @@ Note that when aesthetics are mapped from a variable, they go in `aes()`, but to
 
 
 
-```r
+~~~{.r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
     geom_point(aes(color = continent), size = .25) +
     scale_x_log10() +
     geom_smooth(method = 'lm', color = 'black', linetype = 'dashed') +
     theme_bw()
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 
 > #### Challenge -- sizing points {.challenge}
@@ -341,27 +388,33 @@ Earlier we visualized the change in life expectancy over time across all
 countries in one plot.
 
 
-```r
+~~~{.r}
 ggplot(gapminder, aes(x = year, y = lifeExp, by = country)) +
     geom_line(aes(color = continent))
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 That's a mess! It's hard to see patterns because there is so much information on top of itself. We can split this out over multiple panels by adding another layer: **facet** panels. The `facet_wrap` layer takes a "formula" as its argument, denoted by the tilde (~). You can read this as "by continent". It tells R to draw a panel for each unique value of continent.
 
 
-```r
+~~~{.r}
 ggplot(gapminder, aes(x = year, y = lifeExp, by = country)) +
     geom_line(aes(color = continent)) +
     facet_wrap(~ continent)
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 
 
@@ -372,7 +425,7 @@ To clean this figure up for a publication we need to change some of the text ele
 We can do this by adding a few new layers. The `xlab` and `ylab` layers control the names of the x and y axes. The **theme** layer is where we change lots of minor details of a plot. here we'll rotate the axis text (with `angle`) so that they'll fit, and then make sure they're lined up right with `vjust` for vertical-adjustment. And let's add a plot title for fun; we can do that with `ggtitle` layer.
 
 
-```r
+~~~{.r}
 ggplot(gapminder, aes(x = year, y = lifeExp, by = country)) +
     geom_line(aes(color = continent)) +
     facet_wrap(~ continent) +
@@ -382,11 +435,14 @@ ggplot(gapminder, aes(x = year, y = lifeExp, by = country)) +
     scale_color_brewer(guide = "none", palette = "Dark2") +
     theme(axis.text.x = element_text(angle = 270, vjust = .5)) +
     ggtitle('Life expectancy over time by country')
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
 
 
 ### Saving plots
@@ -396,18 +452,21 @@ Now that we have that plot just the way we want it, let's write it to disk as an
 You can use the `ggsave` function to save a ggplot. By default, `ggave` will save the last generated plot in the same dimensions as your viewing pane. The only required argument to `ggsave` is the location of the file you want to write to. Using our project organization, let's write the last plot to `results/lifeExpByCountry.png`. `ggsave` will notices the extension of the filename and writes the file in that format. You can also save as .pdf, .jpg, and other file types.
 
 
-```r
+~~~{.r}
 ggsave('results/lifeExpByYear.png')
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggsave"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggsave"
+
+~~~
 
 Some of the country names are still getting squeezed, so let's make the canvas a little bigger, and we'll save a pdf file instead of a png. Let's also assign our plot to an object and explicitly save that plot to disk. You assign a ggplot object to a variable just like any other object.
 
 
-```r
+~~~{.r}
 myplot <-
   ggplot(gapminder, aes(x = year, y = lifeExp, by = country)) +
     geom_line(aes(color = continent)) +
@@ -418,21 +477,29 @@ myplot <-
     scale_color_brewer(guide = "none", palette = "Dark2") +
     theme(axis.text.x = element_text(angle = 270, vjust = .5)) +
     ggtitle('Life expectancy over time by country')
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggplot"
-```
 
-```r
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggplot"
+
+~~~
+
+
+
+~~~{.r}
 ggsave(filename = 'results/lifeExpByYear-bigger.pdf',
        plot = myplot,
        width = 12, height = 8)
-```
+~~~
 
-```
-## Error in eval(expr, envir, enclos): could not find function "ggsave"
-```
+
+
+~~~{.output}
+Error in eval(expr, envir, enclos): could not find function "ggsave"
+
+~~~
 
 
 ### Wrap-up
@@ -470,13 +537,16 @@ code to modify!
 > changed over time:
 >
 > 
-> ```r
+> ~~~{.r}
 > ggplot(gapminder, aes(x = year, y = lifeExp)) + geom_point()
-> ```
+> ~~~
 > 
-> ```
-> ## Error in eval(expr, envir, enclos): could not find function "ggplot"
-> ```
+> 
+> 
+> ~~~{.output}
+> Error in eval(expr, envir, enclos): could not find function "ggplot"
+> 
+> ~~~
 >
 
 > #### Solution to challenge 2 {.challenge}
@@ -488,14 +558,17 @@ code to modify!
 > column. What trends do you see in the data? Are they what you expected?
 >
 > 
-> ```r
+> ~~~{.r}
 > ggplot(gapminder, aes(x = year, y = lifeExp, color=continent)) +
 >   geom_point()
-> ```
+> ~~~
 > 
-> ```
-> ## Error in eval(expr, envir, enclos): could not find function "ggplot"
-> ```
+> 
+> 
+> ~~~{.output}
+> Error in eval(expr, envir, enclos): could not find function "ggplot"
+> 
+> ~~~
 >
 
 > #### Solution to challenge 3 {.challenge}
@@ -504,14 +577,17 @@ code to modify!
 > happened?
 >
 > 
-> ```r
+> ~~~{.r}
 > ggplot(gapminder, aes(x=year, y=lifeExp, by=country)) +
 >  geom_point() + geom_line(aes(color=continent))
-> ```
+> ~~~
 > 
-> ```
-> ## Error in eval(expr, envir, enclos): could not find function "ggplot"
-> ```
+> 
+> 
+> ~~~{.output}
+> Error in eval(expr, envir, enclos): could not find function "ggplot"
+> 
+> ~~~
 >
 > The lines now get drawn over the points!
 >
@@ -525,15 +601,18 @@ code to modify!
 > Hint: do not use the `aes` function.
 >
 > 
-> ```r
+> ~~~{.r}
 > ggplot(gapminder, aes(x = lifeExp, y = gdpPercap)) +
 >  geom_point(size=3, color="orange") + scale_y_log10() +
 >  geom_smooth(method="lm", size=1.5)
-> ```
+> ~~~
 > 
-> ```
-> ## Error in eval(expr, envir, enclos): could not find function "ggplot"
-> ```
+> 
+> 
+> ~~~{.output}
+> Error in eval(expr, envir, enclos): could not find function "ggplot"
+> 
+> ~~~
 >
 
 > #### Solution to challenge 5 {.challenge}
@@ -545,12 +624,15 @@ code to modify!
 >  - Add a facet layer to panel the density plots by year.
 >
 > 
-> ```r
+> ~~~{.r}
 > ggplot(gapminder, aes(x = gdpPercap, fill=continent)) +
 >  geom_density(alpha=0.6) + facet_wrap( ~ year) + scale_x_log10()
-> ```
+> ~~~
 > 
-> ```
-> ## Error in eval(expr, envir, enclos): could not find function "ggplot"
-> ```
+> 
+> 
+> ~~~{.output}
+> Error in eval(expr, envir, enclos): could not find function "ggplot"
+> 
+> ~~~
 >

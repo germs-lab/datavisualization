@@ -4,7 +4,14 @@ title: R for reproducible scientific analysis
 subtitle: Creating publication quality graphics
 minutes: 105 (1.75 hrs)
 ---
-
+```{r, include=FALSE}
+source("tools/chunk-options.R")
+opts_chunk$set(fig.path = "fig/04-plot-ggplot2/", cache = TRUE)
+# Silently load in the data so the rest of the lesson works
+gapminder <- read.csv("data/raw_data/gapminder.csv", header=TRUE)
+# Create a results/ directory to match learners' projects, in which to save plots:
+dir.create('results')
+```
 > ## Learning objectives {.objectives}
 >
 > * To be able to use ggplot2 to generate publication quality graphics
