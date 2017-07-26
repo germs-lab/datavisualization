@@ -5,11 +5,11 @@ subtitle: Creating publication quality graphics
 minutes: 105 (1.75 hrs)
 ---
 
-```{r, include=FALSE}
+```{r, include=TRUE}
 source("tools/chunk-options.R")
 opts_chunk$set(fig.path = "fig/04-plot-ggplot2/", cache = TRUE)
 # Silently load in the data so the rest of the lesson works
-gapminder <- read.csv("data/gapminder-FiveYearData.csv", header=TRUE)
+gapminder <- read.csv("data/raw_data/gapminder.csv", header=TRUE)
 # Create a results/ directory to match learners' projects, in which to save plots:
 dir.create('results')
 ```
@@ -39,12 +39,12 @@ We will learn `ggplot`, because
 it is effective and efficient, makes publication-quality
 graphics, and is theoretically grounded in the grammar of graphics
 -- the idea that any plot can be expressed from the same
-set of components: a **data** set, a **coordinate system**, 
+set of components: a **data** set, a **coordinate system**,
 and a set of **geoms**--the visual representation of data points.
 
 ### Installing and loading packages
 
-`ggplot` is not part of "base R"; rather it is a package -- a library of functions that an R user wrote. This extensibility is part of the beauty of R. As of December 2016, there are 9,600 such packages in the official Comprehensive R Archive Network, better known as [CRAN](https://cran.r-project.org/). 
+`ggplot` is not part of "base R"; rather it is a package -- a library of functions that an R user wrote. This extensibility is part of the beauty of R. As of December 2016, there are 9,600 such packages in the official Comprehensive R Archive Network, better known as [CRAN](https://cran.r-project.org/).
 
 `ggplot` is one of the most popular packages for R. It is part of a suite of R tools that make up "The Tidyverse". Its author conveniently bundled these tools together in a super-package called `tidyverse`. To use the tidyverse tools, you first need to download them to your machine (once) and then load them (each R session you want to use them). You can download a package via the RStudio menu bar Tools -> Install Packages..., or with a line of code:
 
@@ -67,7 +67,7 @@ library(tidyverse)
 
 ### First plots
 
-The key to understanding ggplot is thinking about a figure in layers: 
+The key to understanding ggplot is thinking about a figure in layers:
 just like you might do in an image editing program like Photoshop, Illustrator, or Inkscape.
 
 Let's start off with an example, longevity as a function of gdp:
@@ -85,8 +85,8 @@ By itself, the call to `ggplot` isn't enough to draw a figure. This sets up the 
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp))
 ```
 
-Now we need to tell `ggplot` how to draw the data. For that, we add another layer: a **geom**. 
-In our example, we used `geom_point`, which tells `ggplot` we want to draw a point for each row in the dataset. 
+Now we need to tell `ggplot` how to draw the data. For that, we add another layer: a **geom**.
+In our example, we used `geom_point`, which tells `ggplot` we want to draw a point for each row in the dataset.
 
 Note that we tell R that multiple lines belong to `ggplot` by including a `+` at the end of each line except the last.
 
@@ -101,7 +101,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
 > changed over time:
 >
 > ```{r, eval=FALSE}
-> ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) + 
+> ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
 > geom_point()
 > ```
 >
@@ -132,7 +132,7 @@ Hmm, that's not quite right. What has happened there? How many lines are there?
 The lines are grouped by continent. We wanted one line per country, but we got one line per continent because we mapped continent to color and `ggplot` assumes we want to group by the coloring variable unless we tell it otherwise. To get one line per country we tell ggplot explicitly to group by country. Just like the other aesthetic mappings, that goes in the `aes()` function:
 
 ```{r lifeExp-line}
-ggplot(gapminder, 
+ggplot(gapminder,
        aes(x = year, y = lifeExp, color = continent, group = country)) +
     geom_point() +
     geom_line()
@@ -152,13 +152,13 @@ Note that each layer is drawn on top of the previous layer. If we want the point
 
 ```{r lifeExp-layer-example-1}
 ggplot(gapminder, aes(x = year, y=lifeExp, by=country)) +
-    geom_line(aes(color = continent)) + 
+    geom_line(aes(color = continent)) +
     geom_point()
 ```
 
 ### Continuous vs. discrete variables
 
-The plots we have done so far have plotted numeric variables to both axes. What if we want to plot a numeric variable against a categorical variable, such as continent. 
+The plots we have done so far have plotted numeric variables to both axes. What if we want to plot a numeric variable against a categorical variable, such as continent.
 
 **Shoutout Q: What kind of plot can we use to plot a continuous variable versus a categorical variable, say life expectency by continent?**
 
@@ -174,10 +174,10 @@ ggplot(gapminder, aes(x = continent, y = lifeExp)) +
 
 > #### Challenge -- A new geom {.challenge}
 >
-> Violin plots are an alternative to boxplots that present the entire distribution of the continuous variable. 
-> 
+> Violin plots are an alternative to boxplots that present the entire distribution of the continuous variable.
+>
 > - Can you change the last plot from a boxplot to a violin plot?
-> - Can you color each violin by its continent? 
+> - Can you color each violin by its continent?
 >       - Tip: Try out the `fill` aesthetic.
 >
 > **Bonus**: Suppose you want to examine the distribution of life expectencies across all countries together; that is, you want a single plot of showing the distribution of all life-expectancy values. There are a few geom's that can do this: Can you make one?
@@ -189,7 +189,7 @@ The grammar of graphics makes it easy to transform the scales on which the data 
 
 ```{r lifeExp-vs-gdpPercap-scatter3, message=FALSE}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
-    geom_point() 
+    geom_point()
 ```
 
 Currently it's hard to see the relationship between the points due to some strong
@@ -205,7 +205,7 @@ x-axis.
 
 ```{r axis-scale}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
-    geom_point() + 
+    geom_point() +
     scale_x_log10()
 ```
 
@@ -218,14 +218,14 @@ We can fit a simple, linear relationship to the data by adding another layer,
 
 ```{r lm-fit}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
-    geom_point() + 
+    geom_point() +
     scale_x_log10() +
     geom_smooth(method = 'lm')
 ```
 
 > #### Challenge -- The power of money, by continent {.challenge}
 >
-> - Modify the last plot to color points by continent and get a separate fit-line for each continent. 
+> - Modify the last plot to color points by continent and get a separate fit-line for each continent.
 >     - Tip: This can be done in one place, with fewer than 20 characters.
 > - **Bonus**: Color the points by continent, but have only one line, fit to all of the data.
 
@@ -235,7 +235,7 @@ Some people like the gray `ggplot` background, others call it "chart junk" -- di
 
 ```{r themes}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
-    geom_point(aes(color = continent)) + 
+    geom_point(aes(color = continent)) +
     scale_x_log10() +
     geom_smooth(method = 'lm') +
     theme_bw()
@@ -246,7 +246,7 @@ There are a variety of themes in a separate package called `ggthemes`, e.g. we c
 ```{r ggthemes}
 library(ggthemes)
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
-    geom_point(aes(color = continent)) + 
+    geom_point(aes(color = continent)) +
     scale_x_log10() +
     geom_smooth(method = 'lm') +
     theme_economist()
@@ -255,14 +255,14 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
 
 #### Changing fixed aspects of plots
 
-Of course, rather than changing the theme of an entire plot, we often want to changes some specific aspect of it. Let's make our linear model line black instead of blue and dashed instead of solid, and let's make our points smaller. 
+Of course, rather than changing the theme of an entire plot, we often want to changes some specific aspect of it. Let's make our linear model line black instead of blue and dashed instead of solid, and let's make our points smaller.
 
 Note that when aesthetics are mapped from a variable, they go in `aes()`, but to set them to a fixed value, they go outside `aes()`.
 
 
 ```{r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
-    geom_point(aes(color = continent), size = .25) + 
+    geom_point(aes(color = continent), size = .25) +
     scale_x_log10() +
     geom_smooth(method = 'lm', color = 'black', linetype = 'dashed') +
     theme_bw()
@@ -279,7 +279,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
 ### Multi-panel figures
 
 Earlier we visualized the change in life expectancy over time across all
-countries in one plot. 
+countries in one plot.
 
 ```{r}
 ggplot(gapminder, aes(x = year, y = lifeExp, by = country)) +
@@ -306,8 +306,8 @@ We can do this by adding a few new layers. The `xlab` and `ylab` layers control 
 ggplot(gapminder, aes(x = year, y = lifeExp, by = country)) +
     geom_line(aes(color = continent)) +
     facet_wrap(~ continent) +
-    xlab("Year") + 
-    ylab("Life expectancy") + 
+    xlab("Year") +
+    ylab("Life expectancy") +
     theme_bw(base_size = 10) +
     scale_color_brewer(guide = "none", palette = "Dark2") +
     theme(axis.text.x = element_text(angle = 270, vjust = .5)) +
@@ -328,18 +328,18 @@ ggsave('results/lifeExpByYear.png')
 Some of the country names are still getting squeezed, so let's make the canvas a little bigger, and we'll save a pdf file instead of a png. Let's also assign our plot to an object and explicitly save that plot to disk. You assign a ggplot object to a variable just like any other object.
 
 ```{r}
-myplot <- 
+myplot <-
   ggplot(gapminder, aes(x = year, y = lifeExp, by = country)) +
     geom_line(aes(color = continent)) +
     facet_wrap(~ continent) +
-    xlab("Year") + 
-    ylab("Life expectancy") + 
+    xlab("Year") +
+    ylab("Life expectancy") +
     theme_bw(base_size = 14) +
     scale_color_brewer(guide = "none", palette = "Dark2") +
     theme(axis.text.x = element_text(angle = 270, vjust = .5)) +
     ggtitle('Life expectancy over time by country')
-ggsave(filename = 'results/lifeExpByYear-bigger.pdf', 
-       plot = myplot, 
+ggsave(filename = 'results/lifeExpByYear-bigger.pdf',
+       plot = myplot,
        width = 12, height = 8)
 ```
 
@@ -362,7 +362,7 @@ code to modify!
 > Create a density plot of GDP per capita, with a separate curve for each continent, with color filled by continent. Save the plot to your `results/` directory.
 >
 > **Advanced**:
-> 
+>
 >   - Adjust the opacity (`alpha`) of the density curves so all are visible.
 >   - Transform the-x axis to better visualize the data spread.
 >   - Add a facet layer to panel the density plots by year.
@@ -406,7 +406,7 @@ code to modify!
 > ggplot(gapminder, aes(x=year, y=lifeExp, by=country)) +
 >  geom_point() + geom_line(aes(color=continent))
 > ```
-> 
+>
 > The lines now get drawn over the points!
 >
 
