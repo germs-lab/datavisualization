@@ -27,6 +27,7 @@ R has a variety functions to load specific kinds of data, e.g. `read.csv` to rea
 
 
 ~~~{.r}
+download.file("https://github.com/data-lessons/gapminder-R/blob/gh-pages/data/continents.RDA?raw=true", destfile="continents.RDA", method="auto")
 load('data/continents.RDA')
 ~~~
 
@@ -450,6 +451,21 @@ Whoa! What just happened? R executed the function and printed the result, just l
 
 ~~~{.r}
 gapminder <- read.csv('data/gapminder-FiveYearData.csv')
+~~~
+
+
+
+~~~{.output}
+Warning in file(file, "rt"): cannot open file 'data/gapminder-
+FiveYearData.csv': No such file or directory
+
+~~~
+
+
+
+~~~{.output}
+Error in file(file, "rt"): cannot open the connection
+
 ~~~
 
 Now, a data.frame called `gapminder` is in my Environment, and I can see that it is a data.frame with 1704 rows and 6 columns. 

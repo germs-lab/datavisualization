@@ -1,40 +1,212 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="generator" content="pandoc">
-    <title>Software Carpentry: R for reproducible scientific analysis</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
-    <link rel="stylesheet" type="text/css" href="css/swc.css" />
-    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
-    <meta charset="UTF-8" />
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body class="lesson">
-    <div class="container card">
-      <div class="banner">
-        <a href="http://software-carpentry.org" title="Software Carpentry">
-          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
-        </a>
-      </div>
-      <article>
-      <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-                    <a href="index.html"><h1 class="title">R for reproducible scientific analysis</h1></a>
-          <h2 class="subtitle">Vectors &amp; Data frames</h2>
-          <section class="objectives panel panel-warning">
-<div class="panel-heading">
-<h2 id="learning-objectives"><span class="glyphicon glyphicon-certificate"></span>Learning objectives</h2>
-</div>
-<div class="panel-body">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Learning objectives {.objectives}</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<blockquote>
+<h2>Learning objectives {.objectives}</h2>
+
 <ul>
 <li>Understand <code>data.frame</code> as common R object and familiar research data table.
+
 <ul>
 <li>Columns = variables, rows = observations</li>
 <li>Columns = vectors</li>
@@ -45,227 +217,362 @@
 <li>Be able to subset vectors with index and logical notation</li>
 <li>Be able to import .RDA and .CSV files</li>
 </ul>
-</div>
-</section>
-<h3 id="loading-data">Loading data</h3>
-<p>R has a variety functions to load specific kinds of data, e.g. <code>read.csv</code> to read a comma-separated value table. Two R-specific data-types are <code>.RDA</code> and <code>.RDS</code>. <code>.RDA</code> files, like the one you just saved, are created with the <code>save</code> function and accessed with the <code>load</code> function. Load needs the location of the saved file, provided as character string file-path, starting with the working directory. We won’t get into working directories now, except to say that RStudio’s projects makes this easier, by making the location of your project (where the <code>.Rproj</code> file is located) the default working directory. It is displayed at the top of your console pane in RStudio. File-paths should be provided relative to that location. So, to load the file we just saved:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="st">&#39;data/continents.RDA&#39;</span>)</code></pre></div>
-<h3 id="intro-to-data.frames">Intro to data.frames</h3>
-<p>Check your “Environment” tab – a new object called <code>continents</code> has appeared. If your environment is in “list” mode, switch to “grid” as it’s more informative. We can see that <code>continents</code> has Type data.frame and contains 6 observations of 4 variables. Click on the spreadsheet icon at far-right to view it.</p>
-<p>This is a <code>data.frame</code> – the type of object most of us work with most of the time in R. In a <code>data.frame</code> each column represents a variable, and each row is an observation. This is the basic data organizational scheme – one column per variable, one row per observation. You might recognize this form from from a statistics class or your own data analysis.</p>
-<h4 id="inspecting-a-data.frame">Inspecting a data.frame</h4>
-<p>Rather than pulling up the spreadsheet form of a data.frame, we’d like to use R to get more information about it. In this case, our <code>data.frame</code> is so small that we can print the whole thing and inspect it:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">continents</code></pre></div>
-<pre class="output"><code>   continent area_km2 population percent_total_pop
+</blockquote>
+
+<h3>Loading data</h3>
+
+<p>R has a variety functions to load specific kinds of data, e.g. <code>read.csv</code> to read a comma-separated value table. Two R-specific data-types are <code>.RDA</code> and <code>.RDS</code>. <code>.RDA</code> files, like the one you just saved, are created with the <code>save</code> function and accessed with the <code>load</code> function. Load needs the location of the saved file, provided as character string file-path, starting with the working directory. We won&#39;t get into working directories now, except to say that RStudio&#39;s projects makes this easier, by making the location of your project (where the <code>.Rproj</code> file is located) the default working directory. It is displayed at the top of your console pane in RStudio. File-paths should be provided relative to that location. So, to load the file we just saved:</p>
+
+<pre><code class="r">download.file(&quot;https://github.com/data-lessons/gapminder-R/blob/gh-pages/data/continents.RDA?raw=true&quot;, destfile=&quot;continents.RDA&quot;, method=&quot;auto&quot;)
+load(&#39;data/continents.RDA&#39;)
+</code></pre>
+
+<h3>Intro to data.frames</h3>
+
+<p>Check your &ldquo;Environment&rdquo; tab &ndash; a new object called <code>continents</code> has appeared. If your environment is in &ldquo;list&rdquo; mode, switch to &ldquo;grid&rdquo; as it&#39;s more informative. We can see that <code>continents</code> has Type data.frame and contains 6 observations of 4 variables. Click on the spreadsheet icon at far-right to view it. </p>
+
+<p>This is a <code>data.frame</code> &ndash; the type of object most of us work with most of the time in R. In a <code>data.frame</code> each column represents a variable, and each row is an observation. This is the basic data organizational scheme &ndash; one column per variable, one row per observation. You might recognize this form from from a statistics class or your own data analysis. </p>
+
+<h4>Inspecting a data.frame</h4>
+
+<p>Rather than pulling up the spreadsheet form of a data.frame, we&#39;d like to use R to get more information about it. In this case, our <code>data.frame</code> is so small that we can print the whole thing and inspect it:</p>
+
+<pre><code class="r">continents
+</code></pre>
+
+<pre><code class="output">   continent area_km2 population percent_total_pop
 1     Africa 30370000 1022234000              15.0
 2   Americas 42330000  934611000              14.0
 3 Antarctica 13720000       4490               0.0
 4       Asia 43820000 4164252000              60.0
 5     Europe 10180000  738199000              11.0
 6    Oceania  9008500   29127000               0.4
+
 </code></pre>
-<p>When we start working with more-realistic datasets, let alone big data, that won’t work. We can get the first few rows of a <code>data.frame</code> with <code>head</code> (in this case all the rows!).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(continents)</code></pre></div>
-<pre class="output"><code>   continent area_km2 population percent_total_pop
+
+<p>When we start working with more-realistic datasets, let alone big data, that won&#39;t work. We can get the first few rows of a <code>data.frame</code> with <code>head</code> (in this case all the rows!). </p>
+
+<pre><code class="r">head(continents)
+</code></pre>
+
+<pre><code class="output">   continent area_km2 population percent_total_pop
 1     Africa 30370000 1022234000              15.0
 2   Americas 42330000  934611000              14.0
 3 Antarctica 13720000       4490               0.0
 4       Asia 43820000 4164252000              60.0
 5     Europe 10180000  738199000              11.0
 6    Oceania  9008500   29127000               0.4
+
 </code></pre>
+
 <p><code>str</code> provides richer information about a <code>data.frame</code> and each element in it. It is generally a good first-step inspection of an R object.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(continents)</code></pre></div>
-<pre class="output"><code>&#39;data.frame&#39;:   6 obs. of  4 variables:
+
+<pre><code class="r">str(continents)
+</code></pre>
+
+<pre><code class="output">&#39;data.frame&#39;:   6 obs. of  4 variables:
  $ continent        : chr  &quot;Africa&quot; &quot;Americas&quot; &quot;Antarctica&quot; &quot;Asia&quot; ...
  $ area_km2         : num  30370000 42330000 13720000 43820000 10180000 ...
  $ population       : num  1.02e+09 9.35e+08 4.49e+03 4.16e+09 7.38e+08 ...
  $ percent_total_pop: num  15 14 0 60 11 0.4
+
 </code></pre>
-<p>We get some summary information on <code>continents</code>: it’s type and dimensions, and we get some information on each variable in the <code>data.frame</code>. We’ll get into the details of variable types later, but for now, note that <code>continent</code> is a character-type variable and the rest are numeric.</p>
-<section class="challenge panel panel-success">
-<div class="panel-heading">
-<h4 id="shoutout"><span class="glyphicon glyphicon-pencil"></span>Shoutout</h4>
-</div>
-<div class="panel-body">
-<p>There is another function like <code>head()</code> and <code>str()</code> that provides information on a <code>data.frame</code>: <code>summary()</code><br />
-- Call the <code>summary</code> function on the <code>continent</code> data.<br />
-- What is the average (mean) area of a continent?</p>
-</div>
-</section>
-<h3 id="vectors">Vectors</h3>
-<p>Vectors are a collection of observations of a single variable, ie a column in a data frame. They are the fundamental unit of R. Let’s explore why that’s useful and how to work with them.</p>
+
+<p>We get some summary information on <code>continents</code>: it&#39;s type and dimensions, and we get some information on each variable in the <code>data.frame</code>. We&#39;ll get into the details of variable types later, but for now, note that <code>continent</code> is a character-type variable and the rest are numeric.</p>
+
+<blockquote>
+<h4>Shoutout {.challenge}</h4>
+
+<p>There is another function like <code>head()</code> and <code>str()</code> that provides information on a <code>data.frame</code>: <code>summary()</code>  </p>
+
+<ul>
+<li>Call the <code>summary</code> function on the <code>continent</code> data.<br/></li>
+<li>What is the average (mean) area of a continent?</li>
+</ul>
+</blockquote>
+
+<h3>Vectors</h3>
+
+<p>Vectors are a collection of observations of a single variable, ie a column in a data frame. They are the fundamental unit of R. Let&#39;s explore why that&#39;s useful and how to work with them.</p>
+
 <p>We can extract a vector (ie a single variable) from a data frame with the <code>$</code> operator.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">continents$population</code></pre></div>
-<pre class="output"><code>[1] 1022234000  934611000       4490 4164252000  738199000   29127000
+
+<pre><code class="r">continents$population
 </code></pre>
+
+<pre><code class="output">[1] 1022234000  934611000       4490 4164252000  738199000   29127000
+
+</code></pre>
+
 <p>Note that you can use tab-completion to see what variables are available.</p>
+
 <p>That just printed the six values of population. We are going to work with them some more, so extract them from the data.frame and store them to a new object, called <code>pop</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop &lt;-<span class="st"> </span>continents$population</code></pre></div>
-<p>Now we have a new object in our environment: a numeric “vector” with six entries. R is built around vectors. In data analysis and statistics, we don’t often work with individual numbers, but multiple observations. This is baked into R and helps it give it its power.</p>
-<p>Another core R concept is the idea that when you manipulate an object, the original object doesn’t change. Note that the <code>continents</code> data.frame still has the population variable. R didn’t “take it out” of <code>continents</code>; instead, it made a copy of it and stored it to a variable called <code>pop</code>. They are now two separate things. If we make a change to one, it will not affect the other. There is a powerful computational paradigm here that may not be apparent yet, but keep in mind that anything you do in R, if you want to keep the results, you need to assign them to a new object.</p>
-<h4 id="vectorization">Vectorization</h4>
-<p>We just said that R is built around vectors. Most functions that accept a single value can also accept a vector of values. E.g. we can find the logarithm of each continent’s population:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(<span class="dt">x =</span> pop, <span class="dt">base =</span> <span class="dv">10</span>)</code></pre></div>
-<pre class="output"><code>[1] 9.009550 8.970631 3.652246 9.619537 8.868173 7.464296
+
+<pre><code class="r">pop &lt;- continents$population
 </code></pre>
+
+<p>Now we have a new object in our environment: a numeric &ldquo;vector&rdquo; with six entries. R is built around vectors. In data analysis and statistics, we don&#39;t often work with individual numbers, but multiple observations. This is baked into R and helps it give it its power. </p>
+
+<p>Another core R concept is the idea that when you manipulate an object, the original object doesn&#39;t change. Note that the <code>continents</code> data.frame still has the population variable. R didn&#39;t &ldquo;take it out&rdquo; of <code>continents</code>; instead, it made a copy of it and stored it to a variable called <code>pop</code>. They are now two separate things. If we make a change to one, it will not affect the other. There is a powerful computational paradigm here that may not be apparent yet, but keep in mind that anything you do in R, if you want to keep the results, you need to assign them to a new object.</p>
+
+<h4>Vectorization</h4>
+
+<p>We just said that R is built around vectors. Most functions that accept a single value can also accept a vector of values. E.g. we can find the logarithm of each continent&#39;s population:</p>
+
+<pre><code class="r">log(x = pop, base = 10)
+</code></pre>
+
+<pre><code class="output">[1] 9.009550 8.970631 3.652246 9.619537 8.868173 7.464296
+
+</code></pre>
+
 <p>R went over each item in <code>pop</code> and took the base-10 logarithm. Some functions take a vector but rather than returning a result for each item, operate on all of them together. E.g. we can find the mean and standard deviation of populations:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(pop)</code></pre></div>
-<pre class="output"><code>[1] 1148071248
+
+<pre><code class="r">mean(pop)
 </code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(pop)</code></pre></div>
-<pre class="output"><code>[1] 1542519717
+
+<pre><code class="output">[1] 1148071248
+
 </code></pre>
+
+<pre><code class="r">sd(pop)
+</code></pre>
+
+<pre><code class="output">[1] 1542519717
+
+</code></pre>
+
 <p>Many functions will also operate element-wise over multiple vectors. E.g. to calculate the population density of each continent, we need to divide the population by the land area for each continent. We can do that with a single command:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">continents$population /<span class="st"> </span>continents$area_km2</code></pre></div>
-<pre class="output"><code>[1] 3.365933e+01 2.207916e+01 3.272595e-04 9.503085e+01 7.251464e+01
-[6] 3.233280e+00
+
+<pre><code class="r">continents$population / continents$area_km2
 </code></pre>
-<p>Note that we didn’t have to take those vectors out of the data.frame to use them. We can do vectorized operations right in the data.frame, which helps keep everything organized: recall that each row of a data.frame is a particular observation (in this case a continent), so we often want to do operations with each row.</p>
+
+<pre><code class="output">[1] 3.365933e+01 2.207916e+01 3.272595e-04 9.503085e+01 7.251464e+01
+[6] 3.233280e+00
+
+</code></pre>
+
+<p>Note that we didn&#39;t have to take those vectors out of the data.frame to use them. We can do vectorized operations right in the data.frame, which helps keep everything organized: recall that each row of a data.frame is a particular observation (in this case a continent), so we often want to do operations with each row.</p>
+
 <p>Just like we can extract a column from a data.frame with <code>$</code>, we can make a new column:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">continents$pop_density &lt;-<span class="st"> </span>continents$population /<span class="st"> </span>continents$area_km2
-continents</code></pre></div>
-<pre class="output"><code>   continent area_km2 population percent_total_pop  pop_density
+
+<pre><code class="r">continents$pop_density &lt;- continents$population / continents$area_km2
+continents
+</code></pre>
+
+<pre><code class="output">   continent area_km2 population percent_total_pop  pop_density
 1     Africa 30370000 1022234000              15.0 3.365933e+01
 2   Americas 42330000  934611000              14.0 2.207916e+01
 3 Antarctica 13720000       4490               0.0 3.272595e-04
 4       Asia 43820000 4164252000              60.0 9.503085e+01
 5     Europe 10180000  738199000              11.0 7.251464e+01
 6    Oceania  9008500   29127000               0.4 3.233280e+00
+
 </code></pre>
-<h3 id="creating-vectors">Creating vectors</h3>
+
+<h3>Creating vectors</h3>
+
 <p>We can also manually create new vectors. There are many ways to do this, but the most flexible is the combine function, <code>c()</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)</code></pre></div>
-<pre class="output"><code>[1] 1 3 5
+
+<pre><code class="r">c(1, 3, 5)
 </code></pre>
-<p>Let’s store that vector in a new variable. We will use it again soon.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">odds &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>)</code></pre></div>
-<h3 id="subsetting">Subsetting</h3>
-<h4 id="subset-by-index">Subset by index</h4>
-<p>We can extract items from a vector by specifying which positions, or indices, we want. R’s syntax for subsetting is square brackets (<code>[ ]</code>) at the end of an object containing the positions to return. So to get the third element out of our <code>pop</code> vector:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop</code></pre></div>
-<pre class="output"><code>[1] 1022234000  934611000       4490 4164252000  738199000   29127000
+
+<pre><code class="output">[1] 1 3 5
+
 </code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop[<span class="dv">3</span>]</code></pre></div>
-<pre class="output"><code>[1] 4490
+
+<p>Let&#39;s store that vector in a new variable. We will use it again soon.</p>
+
+<pre><code class="r">odds &lt;- c(1, 3, 5)
 </code></pre>
+
+<h3>Subsetting</h3>
+
+<h4>Subset by index</h4>
+
+<p>We can extract items from a vector by specifying which positions, or indices, we want. R&#39;s syntax for subsetting is square brackets (<code>[ ]</code>) at the end of an object containing the positions to return. So to get the third element out of our <code>pop</code> vector:</p>
+
+<pre><code class="r">pop
+</code></pre>
+
+<pre><code class="output">[1] 1022234000  934611000       4490 4164252000  738199000   29127000
+
+</code></pre>
+
+<pre><code class="r">pop[3]
+</code></pre>
+
+<pre><code class="output">[1] 4490
+
+</code></pre>
+
 <p>To get the first three elements, we need to put a vector containing 1, 2, and 3 inside the <code>[ ]</code>. We just learned how to make such a vector using the combine function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop[<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)]</code></pre></div>
-<pre class="output"><code>[1] 1022234000  934611000       4490
+
+<pre><code class="r">pop[c(1, 2, 3)]
 </code></pre>
-<p>Sometimes it will be more useful to provide the desired positions as a variable. Let’s pull out the odd-positioned entries from <code>pop</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop[odds]</code></pre></div>
-<pre class="output"><code>[1] 1022234000       4490  738199000
+
+<pre><code class="output">[1] 1022234000  934611000       4490
+
 </code></pre>
-<p>We can also tell R which elements we <em>don’t</em> want with a <code>-</code>. This returns each element in <code>pop</code> except the first one:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop[-<span class="dv">1</span>]</code></pre></div>
-<pre class="output"><code>[1]  934611000       4490 4164252000  738199000   29127000
+
+<p>Sometimes it will be more useful to provide the desired positions as a variable. Let&#39;s pull out the odd-positioned entries from <code>pop</code>:</p>
+
+<pre><code class="r">pop[odds]
 </code></pre>
-<p>If we try to ask for an element that doesn’t exist, R returns <code>NA</code>. <code>NA</code> is a special value in R that means “missing”.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop[<span class="dv">10</span>]</code></pre></div>
-<pre class="output"><code>[1] NA
+
+<pre><code class="output">[1] 1022234000       4490  738199000
+
 </code></pre>
-<section class="challenge panel panel-success">
-<div class="panel-heading">
-<h4 id="challenge-create-and-subset-a-vector"><span class="glyphicon glyphicon-pencil"></span>Challenge – Create and subset a vector</h4>
-</div>
-<div class="panel-body">
-<p>Similar to <code>c</code>, the <code>seq</code> function creates a vector: a <strong>seq</strong>uence of numbers.</p>
+
+<p>We can also tell R which elements we <em>don&#39;t</em> want with a <code>-</code>. This returns each element in <code>pop</code> except the first one:</p>
+
+<pre><code class="r">pop[-1]
+</code></pre>
+
+<pre><code class="output">[1]  934611000       4490 4164252000  738199000   29127000
+
+</code></pre>
+
+<p>If we try to ask for an element that doesn&#39;t exist, R returns <code>NA</code>. <code>NA</code> is a special value in R that means &ldquo;missing&rdquo;.</p>
+
+<pre><code class="r">pop[10]
+</code></pre>
+
+<pre><code class="output">[1] NA
+
+</code></pre>
+
+<blockquote>
+<h4>Challenge &ndash; Create and subset a vector {.challenge}</h4>
+
+<p>Similar to <code>c</code>, the <code>seq</code> function creates a vector: a <strong>seq</strong>uence of numbers. </p>
+
 <ul>
-<li><p>Your first task is to create a sequence of all the multiples of three from three to 300. Figure out how to do this. Some combination of playing with the function in the console and reading its helpfile (<code>?seq</code>) should work. Helpfiles are challenging at first, but it’s important to learn how to find the info you need in them. Hint: The arguments you need here are <code>from</code>, <code>to</code>, and <code>by</code>.</p></li>
-<li>Store your sequence in a variable.</li>
-<li>Extract the 33rd entry from the sequence</li>
-<li><strong>Bonus</strong>: Create a vector with ten evenly-spaced numbers starting with one and ending with one-million. What is the sum of the second and ninth entries in this vector?</li>
+<li><p>Your first task is to create a sequence of all the multiples of three from three to 300. Figure out how to do this. Some combination of playing with the function in the console and reading its helpfile (<code>?seq</code>) should work. Helpfiles are challenging at first, but it&#39;s important to learn how to find the info you need in them. Hint: The arguments you need here are <code>from</code>, <code>to</code>, and <code>by</code>.</p></li>
+<li><p>Store your sequence in a variable.</p></li>
+<li><p>Extract the 33rd entry from the sequence</p></li>
+<li><p><strong>Bonus</strong>: Create a vector with ten evenly-spaced numbers starting with one and ending with one-million. What is the sum of the second and ninth entries in this vector?</p></li>
 <li><p><strong>Super-Bonus</strong>: Returning to the multiples-of-three vector, what is the sum of the numbers in positions that are not evenly divisible by three? That is, the sum of the first, second, fourth, fifth, seventh, etc. entries.</p></li>
 </ul>
-</div>
-</section>
-<h4 id="subset-by-logical">Subset by logical</h4>
+</blockquote>
+
+<h4>Subset by logical</h4>
+
 <p>Note that the <code>continents</code> data frame contains two common kinds of variables: numbers (num) and strings (chr).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(continents)</code></pre></div>
-<pre class="output"><code>&#39;data.frame&#39;:   6 obs. of  5 variables:
+
+<pre><code class="r">str(continents)
+</code></pre>
+
+<pre><code class="output">&#39;data.frame&#39;:   6 obs. of  5 variables:
  $ continent        : chr  &quot;Africa&quot; &quot;Americas&quot; &quot;Antarctica&quot; &quot;Asia&quot; ...
  $ area_km2         : num  30370000 42330000 13720000 43820000 10180000 ...
  $ population       : num  1.02e+09 9.35e+08 4.49e+03 4.16e+09 7.38e+08 ...
  $ percent_total_pop: num  15 14 0 60 11 0.4
  $ pop_density      : num  3.37e+01 2.21e+01 3.27e-04 9.50e+01 7.25e+01 ...
+
 </code></pre>
-<p>A third important data type in R is logicals. You saw this when making logical comparisons like <code>1 &gt; 0</code>. Logical data can only be <code>TRUE</code> or <code>FALSE</code> (or <code>NA</code> for missing; any variable type in R can have <code>NA</code>-missing values).</p>
-<p>Logical comparisons are vectorized like other things in R. Let’s find the highly populated continents, those with more than one-billion people. One-billion is 10^9, so we can write it as <code>1e9</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop &gt;<span class="st"> </span><span class="fl">1e9</span></code></pre></div>
-<pre class="output"><code>[1]  TRUE FALSE FALSE  TRUE FALSE FALSE
+
+<p>A third important data type in R is logicals. You saw this when making logical comparisons like <code>1 &gt; 0</code>. Logical data can only be <code>TRUE</code> or <code>FALSE</code> (or <code>NA</code> for missing; any variable type in R can have <code>NA</code>-missing values). </p>
+
+<p>Logical comparisons are vectorized like other things in R. Let&#39;s find the highly populated continents, those with more than one-billion people. One-billion is 10<sup>9,</sup> so we can write it as <code>1e9</code>.</p>
+
+<pre><code class="r">pop &gt; 1e9
 </code></pre>
-<p>That went over each element in <code>pop</code> and compared it with 10. We say that R “recycled” 10 to compare it with each element in <code>pop</code>.</p>
+
+<pre><code class="output">[1]  TRUE FALSE FALSE  TRUE FALSE FALSE
+
+</code></pre>
+
+<p>That went over each element in <code>pop</code> and compared it with 10. We say that R &ldquo;recycled&rdquo; 10 to compare it with each element in <code>pop</code>. </p>
+
 <p>In the same way that we subset by index before, we can subset by a logical vector. To find the values of <code>pop</code> that were greater than one-billion, we subset it like so:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pop[pop &gt;<span class="st"> </span><span class="fl">1e9</span>]</code></pre></div>
-<pre class="output"><code>[1] 1022234000 4164252000
+
+<pre><code class="r">pop[pop &gt; 1e9]
 </code></pre>
-<section class="challenge panel panel-success">
-<div class="panel-heading">
-<h4 id="shoutout-1"><span class="glyphicon glyphicon-pencil"></span>Shoutout</h4>
-</div>
-<div class="panel-body">
+
+<pre><code class="output">[1] 1022234000 4164252000
+
+</code></pre>
+
+<blockquote>
+<h4>Shoutout {.challenge}</h4>
+
 <p>How could you extract the names of the continents with more than one-billion people?</p>
-</div>
-</section>
-<p>Recall that in a data frame, each row constitutes a single observation. This makes it especially useful to test one column and use it to subset another – we often want the entries of some variable where a condition on another variable is met. For example, to find the land-area of Africa, we can test the continent names for being “Africa” and extract the area where that is true.</p>
+</blockquote>
+
+<p>Recall that in a data frame, each row constitutes a single observation. This makes it especially useful to test one column and use it to subset another &ndash; we often want the entries of some variable where a condition on another variable is met. For example, to find the land-area of Africa, we can test the continent names for being &ldquo;Africa&rdquo; and extract the area where that is true. </p>
+
 <p>Here as elsewhere, it is often useful to build code from the insight out, ie, write the logical test first, then go left and write what you want to subset with it.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">continents$area_km2[continents$continent ==<span class="st"> &quot;Africa&quot;</span>]</code></pre></div>
-<pre class="output"><code>[1] 30370000
+
+<pre><code class="r">continents$area_km2[continents$continent == &quot;Africa&quot;]
 </code></pre>
-<section class="challenge panel panel-success">
-<div class="panel-heading">
-<h4 id="mcq-subset-and-vectorize"><span class="glyphicon glyphicon-pencil"></span>MCQ – Subset and vectorize</h4>
-</div>
-<div class="panel-body">
-<p>What is the total land area of continents that have at least 10% of the world’s population?</p>
+
+<pre><code class="output">[1] 30370000
+
+</code></pre>
+
+<blockquote>
+<h4>MCQ &ndash; Subset and vectorize {.challenge}</h4>
+
+<p>What is the total land area of continents that have at least 10% of the world&#39;s population? </p>
+
 <ul>
 <li>Use subsetting to get the areas you want</li>
 <li>Use the <code>sum</code> function to find the total land area</li>
 </ul>
-<ol style="list-style-type: lower-alpha">
-<li>149428500</li>
-<li>126700000</li>
-<li>22728500</li>
-<li>100</li>
-</ol>
-</div>
-</section>
-<h3 id="reading-csv-data">Reading csv data</h3>
-<p>The <code>continents</code> data.frame was useful for learning because it was so small, but it’s time to graduate to something more interesting and realistic. Data come in many forms, and we need to be able to load them in R. For our own use and with others who use R, there are R-specific data structures we can use, like the .RDA file-type we just saw, but we need to be able to work with more general data types too. Comma-separated value (csv) tables are perhaps the most universal data structure.</p>
+
+<p>a. 149428500
+b. 126700000
+c. 22728500
+d. 100</p>
+</blockquote>
+
+<h3>Reading csv data</h3>
+
+<p>The <code>continents</code> data.frame was useful for learning because it was so small, but it&#39;s time to graduate to something more interesting and realistic. Data come in many forms, and we need to be able to load them in R. For our own use and with others who use R, there are R-specific data structures we can use, like the .RDA file-type we just saw, but we need to be able to work with more general data types too. Comma-separated value (csv) tables are perhaps the most universal data structure. </p>
+
 <p>The gapminder dataset provides country-by-year level data on gdp, population, and longevity. I downloaded it and put it in the data directory of my project. You will do the same in a minute.</p>
-<p>We can read csv’s with the <code>read.csv</code> function. The argument to <code>read.csv</code> is the location of the file, relative to your working directory. Since I saved the gapminder data to the <code>data</code> directory of my project, I can load it with this. Note the use of tab-completion to find the file and get it exactly right without typos.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">read.csv</span>(<span class="st">&#39;data/gapminder-FiveYearData.csv&#39;</span>)</code></pre></div>
+
+<p>We can read csv&#39;s with the <code>read.csv</code> function. The argument to <code>read.csv</code> is the location of the file, relative to your working directory. Since I saved the gapminder data to the <code>data</code> directory of my project, I can load it with this. Note the use of tab-completion to find the file and get it exactly right without typos. </p>
+
+<pre><code class="r">read.csv(&#39;data/gapminder-FiveYearData.csv&#39;)
+</code></pre>
+
 <p>Whoa! What just happened? R executed the function and printed the result, just like when you enter <code>log(1)</code>. How do you store an object to a variable?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&#39;data/gapminder-FiveYearData.csv&#39;</span>)</code></pre></div>
-<p>Now, a data.frame called <code>gapminder</code> is in my Environment, and I can see that it is a data.frame with 1704 rows and 6 columns.</p>
-<section class="challenge panel panel-success">
-<div class="panel-heading">
-<h4 id="challenge-read-csv-data"><span class="glyphicon glyphicon-pencil"></span>Challenge – read csv data</h4>
-</div>
-<div class="panel-body">
-<p>The gapminder data are available at <a href="https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv">this link</a>.<br />
-- Right click on the link to “save file as…”<br />
-- Save the .csv file in the <code>/data</code> directory of your project.<br />
-- Read the data with the <code>read.csv</code> function and assign it to the variable <code>gapminder</code>.<br />
-- Inspect the data.frame using the <code>summary</code> function. What is the most recent year for which we have data?</p>
+
+<pre><code class="r">gapminder &lt;- read.csv(&#39;data/gapminder-FiveYearData.csv&#39;)
+</code></pre>
+
+<pre><code class="output">Warning in file(file, &quot;rt&quot;): cannot open file &#39;data/gapminder-
+FiveYearData.csv&#39;: No such file or directory
+
+</code></pre>
+
+<pre><code class="output">Error in file(file, &quot;rt&quot;): cannot open the connection
+
+</code></pre>
+
+<p>Now, a data.frame called <code>gapminder</code> is in my Environment, and I can see that it is a data.frame with 1704 rows and 6 columns. </p>
+
+<blockquote>
+<h4>Challenge &ndash; read csv data {.challenge}</h4>
+
+<p>The gapminder data are available at <a href="https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv">this link</a>.  </p>
+
+<ul>
+<li>Right click on the link to &ldquo;save file as&hellip;&rdquo;<br/></li>
+<li>Save the .csv file in the <code>/data</code> directory of your project.<br/></li>
+<li>Read the data with the <code>read.csv</code> function and assign it to the variable <code>gapminder</code>.<br/></li>
+<li>Inspect the data.frame using the <code>summary</code> function. What is the most recent year for which we have data? </li>
+</ul>
+
 <p><strong>Advanced challenge</strong></p>
-<p>Suppose you get a .csv file from a colleague in Europe. Because they use “,” (comma) as a decimal separator, they use “;” (semi-colons) to separate fields. How can you read it into R?</p>
-<p>Feel free to use the web and/or R’s helpfiles.</p>
-</div>
-</section>
-        </div>
-      </div>
-      </article>
-      <div class="footer">
-        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
-        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
-        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
-        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
-      </div>
-    </div>
-    <!-- Javascript placed at the end of the document so the pages load faster -->
-    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
-    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
-  </body>
+
+<p>Suppose you get a .csv file from a colleague in Europe. Because they use &ldquo;,&rdquo; (comma) as a decimal separator, they use &ldquo;;&rdquo; (semi-colons) to separate fields. How can you read it into R? </p>
+
+<p>Feel free to use the web and/or R&#39;s helpfiles.    </p>
+</blockquote>
+
+</body>
+
 </html>
