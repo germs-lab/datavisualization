@@ -1,73 +1,199 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="generator" content="pandoc">
-    <title>Software Carpentry: R for reproducible scientific analysis</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
-    <link rel="stylesheet" type="text/css" href="css/swc.css" />
-    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
-    <meta charset="UTF-8" />
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body class="lesson">
-    <div class="container card">
-      <div class="banner">
-        <a href="http://software-carpentry.org" title="Software Carpentry">
-          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
-        </a>
-      </div>
-      <article>
-      <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-                    <h1 class="title">R for reproducible scientific analysis</h1>
-          <p><strong>Introduction to R for social scientists using the Gapminder dataset</strong></p>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Topics</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<p><strong>Introduction to R for social scientists using the Gapminder dataset</strong></p>
+
 <p>This is a two-day intensive introduction to modern computational techniques for data management, analysis, and visualization with an emphasis on the programming language R. The course assumes no prior programming knowledge. By the end of the workshop, participants will be able to efficiently organize and clean data, manipulate data frames, estimate and work with statistical models, produce a variety of publication-quality plots, and compose dynamic documents that integrate writing, code, and code output.</p>
-<h3 id="topics">Topics</h3>
-<h4 id="data-management">Data Management</h4>
-<ol style="list-style-type: decimal">
-<li><a href="https://www.dropbox.com/sh/h8wew89uy22w8yd/AAA0AO4vGoEuBsCZnvYPtZH0a?dl=0">Spreadsheets</a></li>
-<li><a href="https://www.dropbox.com/sh/ajj02pi61cmd41g/AAC47QAQHlw8EHufgowHYJpla?dl=0">OpenRefine</a></li>
-</ol>
-<h4 id="r">R</h4>
-<ol style="list-style-type: decimal">
-<li><a href="01-intro-r-rstudio.html">Introduction to R and RStudio</a></li>
-<li><a href="02-project-intro.html">Project Management</a></li>
-<li><a href="03-data-types-subsetting.html">Data types and subsetting</a></li>
-<li><a href="04-ggplot.html">Plotting</a></li>
-<li><a href="05-dplyr-single-table.html">Data.frame Manipulation</a></li>
-<li><a href="06-tidy-data.html">Tidy Data</a></li>
-<li><a href="09-regression.html">Statistical Modeling</a></li>
-<li><a href="08-knitr.html">Dynamic Documents</a></li>
-<li><a href="10-capstone.html">Capstone Project</a>
+
+<h3>Topics</h3>
+
+<ol>
+<li> <a href="01-intro-r-rstudio.html">Introduction to R and RStudio</a></li>
+<li> <a href="02-project-intro.html">Project Management</a></li>
+<li> <a href="03-data-types-subsetting.html">Data types and subsetting</a></li>
+<li> <a href="04-ggplot.html">Plotting</a></li>
+<li> <a href="05-dplyr-single-table.html">Data.frame Manipulation</a></li>
+<li> <a href="06-tidy-data.html">Tidy Data</a></li>
+<li> <a href="09-regression.html">Statistical Modeling</a></li>
+<li> <a href="08-knitr.html">Dynamic Documents</a></li>
+<li> <a href="10-capstone.html">Capstone Project</a>
+
 <ul>
 <li><a href="11-capstone_solutions.html">Solutions to Capstone Project</a></li>
 </ul></li>
 </ol>
-<h4 id="bonus-topics">Bonus Topics</h4>
-<p><em>These materials won’t be taught in this lesson but can be done independently.</em></p>
-<ol style="list-style-type: decimal">
-<li><a href="12-joins.html">Multi-table Joins</a></li>
-<li><a href="07-functions.html">Writing Functions</a></li>
+
+<h4>Bonus Topics</h4>
+
+<p><em>These materials won&#39;t be taught in this lesson but can be done independently.</em></p>
+
+<ol>
+<li> <a href="12-joins.html">Multi-table Joins</a></li>
+<li> <a href="07-functions.html">Writing Functions</a></li>
 </ol>
-        </div>
-      </div>
-      </article>
-      <div class="footer">
-        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
-        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
-        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
-        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
-      </div>
-    </div>
-    <!-- Javascript placed at the end of the document so the pages load faster -->
-    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
-    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
-  </body>
+
+</body>
+
 </html>
