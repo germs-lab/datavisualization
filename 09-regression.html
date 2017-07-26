@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: R for reproducible scientific analysis</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">R for reproducible scientific analysis</h1></a>
+          <h2 class="subtitle">Statistical Models</h2>
+          <section class="objectives panel panel-warning">
+<div class="panel-heading">
+<h2 id="learning-objectives"><span class="glyphicon glyphicon-certificate"></span>Learning Objectives</h2>
+</div>
+<div class="panel-body">
+<ul>
+<li>Understand how to execute and interpret basic statistical models</li>
+<li>Discover, learn, and use lm class methods</li>
+</ul>
+</div>
+</section>
+<h3 id="linear-models">Linear models</h3>
+<p>This workshop can’t and won’t teach you statistical modeling, but we can teach you the basic syntax you need to know to use R’s statistical modeling infrastructure.</p>
+<p>To keep things simple we will start by filtering out just the data from 1977 from the <em>gapminder</em> data. Simplifying the data in this way will make it easier to focus on the mechanics of model fitting in R without getting distracted by the complexity of the data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;data/gapminder-FiveYearData.csv&#39;</span>)</code></pre></div>
+<pre class="output"><code>Parsed with column specification:
+cols(
+  country = col_character(),
+  year = col_integer(),
+  pop = col_double(),
+  continent = col_character(),
+  lifeExp = col_double(),
+  gdpPercap = col_double()
+)
+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder77 &lt;-<span class="st"> </span><span class="kw">filter</span>(gapminder, year ==<span class="st"> </span><span class="dv">1977</span>)</code></pre></div>
+<h4 id="fitting-linear-models">Fitting linear models</h4>
+<p><code>lm</code> is the function for a linear model. <code>lm</code> expects a formula as its first argument. Formulas in R are specified with a tilde separating the left and right hand sides. For example, <code>DV ~ IV1</code> means “DV is a function of IV1”.</p>
+<p>The second argument to <code>lm</code> is the name of the data.frame in which the variables are to be found. For example, model life expectancy as a function of gdp:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">lm</span>(lifeExp ~<span class="st"> </span>gdpPercap, gapminder77)</code></pre></div>
+<pre class="output"><code>
+Call:
+lm(formula = lifeExp ~ gdpPercap, data = gapminder77)
+
+Coefficients:
+(Intercept)    gdpPercap  
+  5.348e+01    8.322e-04  
+</code></pre>
+<p>Arithmetic operators have different meanings inside a formula than they do elsewhere in R. For example, outside of a formula <code>+</code> means “addition”, but inside a formula <code>+</code> means “include”. For example, we can include both <code>gdpPercap</code> and <code>continent</code> as predictors of <code>lifeExp</code> by separating the right-hand-side variables with a <code>+</code>.</p>
+<p>Now we will assign the results of the model to a variable called <code>model</code> and then get a more detailed description of the results by calling the <code>summary</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp ~<span class="st"> </span>gdpPercap +<span class="st"> </span>continent, gapminder77)
+<span class="kw">summary</span>(model)</code></pre></div>
+<pre class="output"><code>
+Call:
+lm(formula = lifeExp ~ gdpPercap + continent, data = gapminder77)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-25.4014  -3.1606   0.1833   3.6260  16.7703 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       4.852e+01  9.334e-01  51.981  &lt; 2e-16 ***
+gdpPercap         4.114e-04  7.834e-05   5.251 5.68e-07 ***
+continentAmericas 1.285e+01  1.642e+00   7.826 1.26e-12 ***
+continentAsia     7.889e+00  1.518e+00   5.197 7.26e-07 ***
+continentEurope   1.755e+01  1.763e+00   9.951  &lt; 2e-16 ***
+continentOceania  1.723e+01  4.872e+00   3.536 0.000556 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 6.57 on 136 degrees of freedom
+Multiple R-squared:  0.6697,    Adjusted R-squared:  0.6576 
+F-statistic: 55.15 on 5 and 136 DF,  p-value: &lt; 2.2e-16
+</code></pre>
+<p>Notice that the same <code>summary</code> function gives summary information of a different type depending on whether its argument is a data.frame, a linear model, or something else. That’s handy!</p>
+<p>Other arithmetic operators have special meaning inside formula as well. For example, we can specify interaction effects by separating variables with <code>*</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">interaction_model &lt;-<span class="st"> </span><span class="kw">lm</span>(lifeExp ~<span class="st"> </span>gdpPercap *<span class="st"> </span>continent, gapminder77)
+<span class="kw">summary</span>(interaction_model)</code></pre></div>
+<pre class="output"><code>
+Call:
+lm(formula = lifeExp ~ gdpPercap * continent, data = gapminder77)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-26.0089  -3.3857   0.0334   3.1294  16.4923 
+
+Coefficients:
+                              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                  4.810e+01  1.079e+00  44.566  &lt; 2e-16 ***
+gdpPercap                    5.717e-04  2.226e-04   2.569   0.0113 *  
+continentAmericas            1.055e+01  2.511e+00   4.203 4.83e-05 ***
+continentAsia                8.955e+00  1.751e+00   5.113 1.09e-06 ***
+continentEurope              1.826e+01  3.384e+00   5.398 3.03e-07 ***
+continentOceania             1.430e+01  7.677e+01   0.186   0.8525    
+gdpPercap:continentAmericas  2.088e-04  3.354e-04   0.623   0.5347    
+gdpPercap:continentAsia     -2.439e-04  2.434e-04  -1.002   0.3181    
+gdpPercap:continentEurope   -1.816e-04  3.047e-04  -0.596   0.5522    
+gdpPercap:continentOceania   3.294e-05  4.439e-03   0.007   0.9941    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 6.584 on 132 degrees of freedom
+Multiple R-squared:  0.678, Adjusted R-squared:  0.6561 
+F-statistic: 30.89 on 9 and 132 DF,  p-value: &lt; 2.2e-16
+</code></pre>
+<p>In short you should never assume that an arithmetic operator does the same thing inside a formula that it does outside a formula. For details on the meaning of operators inside R formula refer to <code>help(&quot;formula&quot;)</code>.</p>
+<h4 id="working-with-model-fit-objects">Working with model fit objects</h4>
+<p>Earlier we noted that the <code>summary</code> function does something different for linear model objects than it does for vectors, data.frames, or other things. This is because the <code>summary</code> function has a specific <em>method</em> for <code>lm</code> models. Many other functions in R have specific methods for <code>lm</code> models as well. We can ask R to show us these functions using the <code>methods</code> function, like this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(interaction_model)</code></pre></div>
+<pre class="output"><code>[1] &quot;lm&quot;
+</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">methods</span>(<span class="dt">class =</span> <span class="st">&quot;lm&quot;</span>)</code></pre></div>
+<pre class="output"><code> [1] add1           alias          anova          case.names    
+ [5] confint        cooks.distance deviance       dfbeta        
+ [9] dfbetas        drop1          dummy.coef     effects       
+[13] extractAIC     family         formula        fortify       
+[17] hatvalues      influence      kappa          labels        
+[21] logLik         model.frame    model.matrix   nobs          
+[25] plot           predict        print          proj          
+[29] qr             residuals      rstandard      rstudent      
+[33] simulate       summary        variable.names vcov          
+see &#39;?methods&#39; for accessing help and source code
+</code></pre>
+<p>Using this technique we’ve learned (among other things) that we can ask R to display the ANOVA table for linear models like this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">anova</span>(interaction_model)</code></pre></div>
+<pre class="output"><code>Analysis of Variance Table
+
+Response: lifeExp
+                     Df Sum Sq Mean Sq  F value Pr(&gt;F)    
+gdpPercap             1 6829.0  6829.0 157.5231 &lt;2e-16 ***
+continent             4 5073.6  1268.4  29.2578 &lt;2e-16 ***
+gdpPercap:continent   4  148.1    37.0   0.8538 0.4937    
+Residuals           132 5722.5    43.4                    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+</code></pre>
+<p>and that we can compute confidence intervals around the regression estimates like this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confint</span>(interaction_model)</code></pre></div>
+<pre class="output"><code>                                    2.5 %       97.5 %
+(Intercept)                  4.596704e+01 5.023711e+01
+gdpPercap                    1.314193e-04 1.011956e-03
+continentAmericas            5.584992e+00 1.551742e+01
+continentAsia                5.490166e+00 1.241942e+01
+continentEurope              1.157077e+01 2.495682e+01
+continentOceania            -1.375552e+02 1.661605e+02
+gdpPercap:continentAmericas -4.547025e-04 8.723375e-04
+gdpPercap:continentAsia     -7.253885e-04 2.375353e-04
+gdpPercap:continentEurope   -7.843824e-04 4.211678e-04
+gdpPercap:continentOceania  -8.747124e-03 8.812996e-03
+</code></pre>
+<p>We can also use the <code>predict</code> and <code>residuals</code> functions to extract predictions and errors of prediction from our model. It can be useful to store these as columns in the original data to make visualizing the model easier.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gapminder77 &lt;-<span class="st"> </span><span class="kw">mutate</span>(<span class="kw">ungroup</span>(gapminder77),
+                    <span class="dt">mod_pred =</span> <span class="kw">predict</span>(model),
+                    <span class="dt">mod_resid =</span> <span class="kw">resid</span>(model))</code></pre></div>
+<p>Now that we have augmented the data with predicted values and residuals from the model we can plot those values to better understand what our model says about our data. For example we can inspect a scatter plot of the residuals versus predicted values to see if there are trends in the residuals:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(gapminder77, <span class="kw">aes</span>(<span class="dt">x =</span> mod_pred, <span class="dt">y =</span> mod_resid, <span class="dt">color =</span> continent)) +
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="fig/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" /></p>
+<p>and we can plot the predicted values from out model:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(gapminder77, <span class="kw">aes</span>(<span class="dt">x =</span> gdpPercap, <span class="dt">y =</span> mod_pred, <span class="dt">color =</span> continent)) +
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> lifeExp)) +
+<span class="st">  </span><span class="kw">geom_line</span>()</code></pre></div>
+<p><img src="fig/unnamed-chunk-10-1.png" title="plot of chunk unnamed-chunk-10" alt="plot of chunk unnamed-chunk-10" style="display: block; margin: auto;" /></p>
+<h3 id="glm-and-beyond">glm and beyond</h3>
+<p>Finally, the specification of generalized linear models such as logistic or Poisson regressions is very similar via the <code>glm</code> command. See <code>?glm</code> and the web for help. Beyond glm’s, the statistical capabilities of R are extensive. Recommended packages and functions orgainized by topic are available at https://cran.r-project.org/web/views/. The Social Sciences task view at https://cran.r-project.org/web/views/SocialSciences.html is a good place to start looking for model-fitting function recommendations.</p>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h2 id="challenge---a-plot-and-a-model"><span class="glyphicon glyphicon-pencil"></span>Challenge - A plot and a model</h2>
+</div>
+<div class="panel-body">
+<ul>
+<li>Filter the <code>gapminder</code> data to extract just the data for the most recent year.</li>
+<li>Using the filtered data, make a scatterplot of lifeExp versus gdpPercap.</li>
+<li>Add a smoother and specify <code>method = lm</code> to get a linear fit.</li>
+<li>Run a linear regression of lifeExp on gpdPercap and use <code>summary</code> to view the model results.</li>
+<li>Do your plot and model point to the same conclusions? Which do you find easier to interpret?</li>
+</ul>
+<p>Advanced</p>
+<ul>
+<li>Does the relationship between lifeExp and gdpPercap vary across continents?</li>
+<li>Hint: An interaction model can answer that question.</li>
+</ul>
+</div>
+</section>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h2 id="bonus-challenge---stock-prices"><span class="glyphicon glyphicon-pencil"></span>Bonus challenge - Stock prices</h2>
+</div>
+<div class="panel-body">
+<p>If you have finished the above exercise while other learners are still working… - Using the stock data you tidy’d earlier, fit a simple linear model of stock performance. - Extract the model coefficients into a data.frame. - Fortify the data with residuals, predicted values, etc. - Examine (however you wish) residuals by stock. Is the model particularly over or underpredicting any particular stock? How could you improve the model? - <strong>Advanced</strong>: Build that better model.</p>
+</div>
+</section>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/lesson-template">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+  </body>
+</html>
