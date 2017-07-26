@@ -7,7 +7,6 @@ This is a tutorial for EDAMAME that is based on Data Carpentry material (http://
 ### Topics
 
 1.  [Introduction to R and RStudio](01-intro-r-rstudio.html)
-1.  [Project Management](02-project-intro.html)
 1.  [Data types and subsetting](03-data-types-subsetting.html)
 1.  [Plotting](04-ggplot.html)
 1.  [Data.frame Manipulation](05-dplyr-single-table.html)
