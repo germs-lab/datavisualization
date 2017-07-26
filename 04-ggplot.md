@@ -5,6 +5,8 @@ subtitle: Creating publication quality graphics
 minutes: 105 (1.75 hrs)
 ---
 
+
+
 > ## Learning objectives {.objectives}
 >
 > * To be able to use ggplot2 to generate publication quality graphics
@@ -30,25 +32,64 @@ We will learn `ggplot`, because
 it is effective and efficient, makes publication-quality
 graphics, and is theoretically grounded in the grammar of graphics
 -- the idea that any plot can be expressed from the same
-set of components: a **data** set, a **coordinate system**,
+set of components: a **data** set, a **coordinate system**, 
 and a set of **geoms**--the visual representation of data points.
 
 ### Installing and loading packages
 
-`ggplot` is not part of "base R"; rather it is a package -- a library of functions that an R user wrote. This extensibility is part of the beauty of R. As of December 2016, there are 9,600 such packages in the official Comprehensive R Archive Network, better known as [CRAN](https://cran.r-project.org/).
+`ggplot` is not part of "base R"; rather it is a package -- a library of functions that an R user wrote. This extensibility is part of the beauty of R. As of December 2016, there are 9,600 such packages in the official Comprehensive R Archive Network, better known as [CRAN](https://cran.r-project.org/). 
 
-`ggplot` is one of the most popular packages for R. It is part of a suite of R tools that make up "The Tidyverse". Its author conveniently bundled these tools together in a super-package called `tidyverse`.
+`ggplot` is one of the most popular packages for R. It is part of a suite of R tools that make up "The Tidyverse". Its author conveniently bundled these tools together in a super-package called `tidyverse`. To use the tidyverse tools, you first need to download them to your machine (once) and then load them (each R session you want to use them). You can download a package via the RStudio menu bar Tools -> Install Packages..., or with a line of code:
 
-You first have to load it in your R session. For that, use the `library` function:
+
+~~~{.r}
+install.packages('tidyverse')
+~~~
+
+You only have to download the code once. But whenever you want to *use* a package, you have to load it in your R session. For that, use the `library` function:
 
 
 ~~~{.r}
 library(tidyverse)
 ~~~
 
+
+
+~~~{.output}
+Loading tidyverse: ggplot2
+Loading tidyverse: tibble
+Loading tidyverse: tidyr
+Loading tidyverse: readr
+Loading tidyverse: purrr
+Loading tidyverse: dplyr
+
+~~~
+
+
+
+~~~{.output}
+Conflicts with tidy packages ----------------------------------------------
+
+~~~
+
+
+
+~~~{.output}
+filter(): dplyr, stats
+lag():    dplyr, stats
+
+~~~
+
+
+> #### Challenge -- Install and load tidyverse {.challenge}
+>
+> - Install the `tidyverse` package, either with `install.packages('tidyverse')` or via the menu bar: Tools -> Install Packages...  
+> - Load `tidyverse` with `library(tidyverse)`  
+>   - You will see some warnings about conflicts. That's okay.
+
 ### First plots
 
-The key to understanding ggplot is thinking about a figure in layers:
+The key to understanding ggplot is thinking about a figure in layers: 
 just like you might do in an image editing program like Photoshop, Illustrator, or Inkscape.
 
 Let's start off with an example, longevity as a function of gdp:
@@ -59,12 +100,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
   geom_point()
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
+<img src="fig/04-plot-ggplot2/lifeExp-vs-gdpPercap-scatter-1.png" title="plot of chunk lifeExp-vs-gdpPercap-scatter" alt="plot of chunk lifeExp-vs-gdpPercap-scatter" style="display: block; margin: auto;" />
 
 The first thing we do is call the `ggplot` function. This function tells ggplot what dataset we're using (gapminder) and how to map variables in gapminder to the plotting "canvas" (gdp to the x-axis, life expectancy to the y-axis). That **mapping** of variables to plot elements is done through the `aes` function. Arguments to `aes` will be variable names from the `data.frame` passed to `ggplot`. If you need a reminder of what's in our data.frame, use `str(gapminder)`.
 
@@ -75,15 +111,10 @@ By itself, the call to `ggplot` isn't enough to draw a figure. This sets up the 
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp))
 ~~~
 
+<img src="fig/04-plot-ggplot2/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;" />
 
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
-
-Now we need to tell `ggplot` how to draw the data. For that, we add another layer: a **geom**.
-In our example, we used `geom_point`, which tells `ggplot` we want to draw a point for each row in the dataset.
+Now we need to tell `ggplot` how to draw the data. For that, we add another layer: a **geom**. 
+In our example, we used `geom_point`, which tells `ggplot` we want to draw a point for each row in the dataset. 
 
 Note that we tell R that multiple lines belong to `ggplot` by including a `+` at the end of each line except the last.
 
@@ -93,12 +124,7 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
   geom_point()
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
+<img src="fig/04-plot-ggplot2/lifeExp-vs-gdpPercap-scatter2-1.png" title="plot of chunk lifeExp-vs-gdpPercap-scatter2" alt="plot of chunk lifeExp-vs-gdpPercap-scatter2" style="display: block; margin: auto;" />
 
 > #### Challenge -- Changing a variable {.challenge}
 >
@@ -107,7 +133,7 @@ Error in eval(expr, envir, enclos): could not find function "ggplot"
 >
 > 
 > ~~~{.r}
-> ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
+> ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) + 
 > geom_point()
 > ~~~
 >
@@ -134,12 +160,7 @@ ggplot(gapminder, aes(x = year, y = lifeExp, color = continent)) +
     geom_line()
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
+<img src="fig/04-plot-ggplot2/lifeExp-line-bad-1.png" title="plot of chunk lifeExp-line-bad" alt="plot of chunk lifeExp-line-bad" style="display: block; margin: auto;" />
 
 Hmm, that's not quite right. What has happened there? How many lines are there?
 
@@ -147,18 +168,13 @@ The lines are grouped by continent. We wanted one line per country, but we got o
 
 
 ~~~{.r}
-ggplot(gapminder,
+ggplot(gapminder, 
        aes(x = year, y = lifeExp, color = continent, group = country)) +
     geom_point() +
     geom_line()
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
+<img src="fig/04-plot-ggplot2/lifeExp-line-1.png" title="plot of chunk lifeExp-line" alt="plot of chunk lifeExp-line" style="display: block; margin: auto;" />
 
 Note that aesthetic mappings in the top-line `ggplot` call apply to all layers,
 but you can also map variables just within a single layer. For example, if we
@@ -171,32 +187,22 @@ ggplot(gapminder, aes(x = year, y = lifeExp, group = country)) +
     geom_line(aes(color = continent))
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
+<img src="fig/04-plot-ggplot2/lifeExp-line-2-1.png" title="plot of chunk lifeExp-line-2" alt="plot of chunk lifeExp-line-2" style="display: block; margin: auto;" />
 
 Note that each layer is drawn on top of the previous layer. If we want the points on top of the lines, we can move `geom_point` to after `geom_line`:
 
 
 ~~~{.r}
 ggplot(gapminder, aes(x = year, y=lifeExp, by=country)) +
-    geom_line(aes(color = continent)) +
+    geom_line(aes(color = continent)) + 
     geom_point()
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
+<img src="fig/04-plot-ggplot2/lifeExp-layer-example-1-1.png" title="plot of chunk lifeExp-layer-example-1" alt="plot of chunk lifeExp-layer-example-1" style="display: block; margin: auto;" />
 
 ### Continuous vs. discrete variables
 
-The plots we have done so far have plotted numeric variables to both axes. What if we want to plot a numeric variable against a categorical variable, such as continent.
+The plots we have done so far have plotted numeric variables to both axes. What if we want to plot a numeric variable against a categorical variable, such as continent. 
 
 **Shoutout Q: What kind of plot can we use to plot a continuous variable versus a categorical variable, say life expectency by continent?**
 
@@ -210,20 +216,15 @@ ggplot(gapminder, aes(x = continent, y = lifeExp)) +
     geom_boxplot()
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
+<img src="fig/04-plot-ggplot2/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" style="display: block; margin: auto;" />
 
 
 > #### Challenge -- A new geom {.challenge}
 >
-> Violin plots are an alternative to boxplots that present the entire distribution of the continuous variable.
->
+> Violin plots are an alternative to boxplots that present the entire distribution of the continuous variable. 
+> 
 > - Can you change the last plot from a boxplot to a violin plot?
-> - Can you color each violin by its continent?
+> - Can you color each violin by its continent? 
 >       - Tip: Try out the `fill` aesthetic.
 >
 > **Bonus**: Suppose you want to examine the distribution of life expectencies across all countries together; that is, you want a single plot of showing the distribution of all life-expectancy values. There are a few geom's that can do this: Can you make one?
@@ -236,15 +237,10 @@ The grammar of graphics makes it easy to transform the scales on which the data 
 
 ~~~{.r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
-    geom_point()
+    geom_point() 
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
+<img src="fig/04-plot-ggplot2/lifeExp-vs-gdpPercap-scatter3-1.png" title="plot of chunk lifeExp-vs-gdpPercap-scatter3" alt="plot of chunk lifeExp-vs-gdpPercap-scatter3" style="display: block; margin: auto;" />
 
 Currently it's hard to see the relationship between the points due to some strong
 outliers in GDP per capita. We can change the scale of units on the x-axis using
@@ -260,16 +256,11 @@ x-axis.
 
 ~~~{.r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
-    geom_point() +
+    geom_point() + 
     scale_x_log10()
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
+<img src="fig/04-plot-ggplot2/axis-scale-1.png" title="plot of chunk axis-scale" alt="plot of chunk axis-scale" style="display: block; margin: auto;" />
 
 
 
@@ -281,21 +272,16 @@ We can fit a simple, linear relationship to the data by adding another layer,
 
 ~~~{.r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
-    geom_point() +
+    geom_point() + 
     scale_x_log10() +
     geom_smooth(method = 'lm')
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
+<img src="fig/04-plot-ggplot2/lm-fit-1.png" title="plot of chunk lm-fit" alt="plot of chunk lm-fit" style="display: block; margin: auto;" />
 
 > #### Challenge -- The power of money, by continent {.challenge}
 >
-> - Modify the last plot to color points by continent and get a separate fit-line for each continent.
+> - Modify the last plot to color points by continent and get a separate fit-line for each continent. 
 >     - Tip: This can be done in one place, with fewer than 20 characters.
 > - **Bonus**: Color the points by continent, but have only one line, fit to all of the data.
 
@@ -306,54 +292,32 @@ Some people like the gray `ggplot` background, others call it "chart junk" -- di
 
 ~~~{.r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
-    geom_point(aes(color = continent)) +
+    geom_point(aes(color = continent)) + 
     scale_x_log10() +
     geom_smooth(method = 'lm') +
     theme_bw()
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
+<img src="fig/04-plot-ggplot2/themes-1.png" title="plot of chunk themes" alt="plot of chunk themes" style="display: block; margin: auto;" />
 
 There are a variety of themes in a separate package called `ggthemes`, e.g. we can mimic The Economist [or many others](https://github.com/jrnold/ggthemes). Of course before we use the `ggthemes` package, we have to install it, which you can do with `install.packages('ggthemes')`.
 
 
 ~~~{.r}
 library(ggthemes)
-~~~
-
-
-
-~~~{.output}
-Error in library(ggthemes): there is no package called 'ggthemes'
-
-~~~
-
-
-
-~~~{.r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
-    geom_point(aes(color = continent)) +
+    geom_point(aes(color = continent)) + 
     scale_x_log10() +
     geom_smooth(method = 'lm') +
     theme_economist()
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
+<img src="fig/04-plot-ggplot2/ggthemes-1.png" title="plot of chunk ggthemes" alt="plot of chunk ggthemes" style="display: block; margin: auto;" />
 
 
 #### Changing fixed aspects of plots
 
-Of course, rather than changing the theme of an entire plot, we often want to changes some specific aspect of it. Let's make our linear model line black instead of blue and dashed instead of solid, and let's make our points smaller.
+Of course, rather than changing the theme of an entire plot, we often want to changes some specific aspect of it. Let's make our linear model line black instead of blue and dashed instead of solid, and let's make our points smaller. 
 
 Note that when aesthetics are mapped from a variable, they go in `aes()`, but to set them to a fixed value, they go outside `aes()`.
 
@@ -361,18 +325,13 @@ Note that when aesthetics are mapped from a variable, they go in `aes()`, but to
 
 ~~~{.r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
-    geom_point(aes(color = continent), size = .25) +
+    geom_point(aes(color = continent), size = .25) + 
     scale_x_log10() +
     geom_smooth(method = 'lm', color = 'black', linetype = 'dashed') +
     theme_bw()
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
+<img src="fig/04-plot-ggplot2/unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" style="display: block; margin: auto;" />
 
 
 > #### Challenge -- sizing points {.challenge}
@@ -385,7 +344,7 @@ Error in eval(expr, envir, enclos): could not find function "ggplot"
 ### Multi-panel figures
 
 Earlier we visualized the change in life expectancy over time across all
-countries in one plot.
+countries in one plot. 
 
 
 ~~~{.r}
@@ -393,12 +352,7 @@ ggplot(gapminder, aes(x = year, y = lifeExp, by = country)) +
     geom_line(aes(color = continent))
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
+<img src="fig/04-plot-ggplot2/unnamed-chunk-8-1.png" title="plot of chunk unnamed-chunk-8" alt="plot of chunk unnamed-chunk-8" style="display: block; margin: auto;" />
 
 That's a mess! It's hard to see patterns because there is so much information on top of itself. We can split this out over multiple panels by adding another layer: **facet** panels. The `facet_wrap` layer takes a "formula" as its argument, denoted by the tilde (~). You can read this as "by continent". It tells R to draw a panel for each unique value of continent.
 
@@ -409,12 +363,7 @@ ggplot(gapminder, aes(x = year, y = lifeExp, by = country)) +
     facet_wrap(~ continent)
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
+<img src="fig/04-plot-ggplot2/facet-1.png" title="plot of chunk facet" alt="plot of chunk facet" style="display: block; margin: auto;" />
 
 
 
@@ -429,20 +378,15 @@ We can do this by adding a few new layers. The `xlab` and `ylab` layers control 
 ggplot(gapminder, aes(x = year, y = lifeExp, by = country)) +
     geom_line(aes(color = continent)) +
     facet_wrap(~ continent) +
-    xlab("Year") +
-    ylab("Life expectancy") +
+    xlab("Year") + 
+    ylab("Life expectancy") + 
     theme_bw(base_size = 10) +
     scale_color_brewer(guide = "none", palette = "Dark2") +
     theme(axis.text.x = element_text(angle = 270, vjust = .5)) +
     ggtitle('Life expectancy over time by country')
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
+<img src="fig/04-plot-ggplot2/cleaned up-1.png" title="plot of chunk cleaned up" alt="plot of chunk cleaned up" style="display: block; margin: auto;" />
 
 
 ### Saving plots
@@ -459,7 +403,7 @@ ggsave('results/lifeExpByYear.png')
 
 
 ~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggsave"
+Saving 7 x 7 in image
 
 ~~~
 
@@ -467,38 +411,19 @@ Some of the country names are still getting squeezed, so let's make the canvas a
 
 
 ~~~{.r}
-myplot <-
+myplot <- 
   ggplot(gapminder, aes(x = year, y = lifeExp, by = country)) +
     geom_line(aes(color = continent)) +
     facet_wrap(~ continent) +
-    xlab("Year") +
-    ylab("Life expectancy") +
+    xlab("Year") + 
+    ylab("Life expectancy") + 
     theme_bw(base_size = 14) +
     scale_color_brewer(guide = "none", palette = "Dark2") +
     theme(axis.text.x = element_text(angle = 270, vjust = .5)) +
     ggtitle('Life expectancy over time by country')
-~~~
-
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
-
-
-
-~~~{.r}
-ggsave(filename = 'results/lifeExpByYear-bigger.pdf',
-       plot = myplot,
+ggsave(filename = 'results/lifeExpByYear-bigger.pdf', 
+       plot = myplot, 
        width = 12, height = 8)
-~~~
-
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggsave"
-
 ~~~
 
 
@@ -520,7 +445,7 @@ code to modify!
 > Create a density plot of GDP per capita, with a separate curve for each continent, with color filled by continent. Save the plot to your `results/` directory.
 >
 > **Advanced**:
->
+> 
 >   - Adjust the opacity (`alpha`) of the density curves so all are visible.
 >   - Transform the-x axis to better visualize the data spread.
 >   - Add a facet layer to panel the density plots by year.
@@ -541,12 +466,7 @@ code to modify!
 > ggplot(gapminder, aes(x = year, y = lifeExp)) + geom_point()
 > ~~~
 > 
-> 
-> 
-> ~~~{.output}
-> Error in eval(expr, envir, enclos): could not find function "ggplot"
-> 
-> ~~~
+> <img src="fig/04-plot-ggplot2/ch1-sol-1.png" title="plot of chunk ch1-sol" alt="plot of chunk ch1-sol" style="display: block; margin: auto;" />
 >
 
 > #### Solution to challenge 2 {.challenge}
@@ -563,12 +483,7 @@ code to modify!
 >   geom_point()
 > ~~~
 > 
-> 
-> 
-> ~~~{.output}
-> Error in eval(expr, envir, enclos): could not find function "ggplot"
-> 
-> ~~~
+> <img src="fig/04-plot-ggplot2/ch2-sol-1.png" title="plot of chunk ch2-sol" alt="plot of chunk ch2-sol" style="display: block; margin: auto;" />
 >
 
 > #### Solution to challenge 3 {.challenge}
@@ -582,13 +497,8 @@ code to modify!
 >  geom_point() + geom_line(aes(color=continent))
 > ~~~
 > 
+> <img src="fig/04-plot-ggplot2/ch3-sol-1.png" title="plot of chunk ch3-sol" alt="plot of chunk ch3-sol" style="display: block; margin: auto;" />
 > 
-> 
-> ~~~{.output}
-> Error in eval(expr, envir, enclos): could not find function "ggplot"
-> 
-> ~~~
->
 > The lines now get drawn over the points!
 >
 
@@ -607,12 +517,7 @@ code to modify!
 >  geom_smooth(method="lm", size=1.5)
 > ~~~
 > 
-> 
-> 
-> ~~~{.output}
-> Error in eval(expr, envir, enclos): could not find function "ggplot"
-> 
-> ~~~
+> <img src="fig/04-plot-ggplot2/ch4-sol-1.png" title="plot of chunk ch4-sol" alt="plot of chunk ch4-sol" style="display: block; margin: auto;" />
 >
 
 > #### Solution to challenge 5 {.challenge}
@@ -629,10 +534,5 @@ code to modify!
 >  geom_density(alpha=0.6) + facet_wrap( ~ year) + scale_x_log10()
 > ~~~
 > 
-> 
-> 
-> ~~~{.output}
-> Error in eval(expr, envir, enclos): could not find function "ggplot"
-> 
-> ~~~
+> <img src="fig/04-plot-ggplot2/ch5-sol-1.png" title="plot of chunk ch5-sol" alt="plot of chunk ch5-sol" style="display: block; margin: auto;" />
 >
