@@ -13,7 +13,7 @@ minutes: 130
 > - Be able to use and understand the advantages of the `magrittr` pipe: `%>%`
 >
 
-It is an often bemoaned fact that a data scientist spends much, and often most, of her time wrangling data: getting it organized and clean. In this lesson we will learn an efficient set of tools that can handle the vast majority of most data management tasks. 
+It is an often bemoaned fact that a data scientist spends much, and often most, of her time wrangling data: getting it organized and clean. In this lesson we will learn an efficient set of tools that can handle the vast majority of most data management tasks.
 
 Enter `dplyr`, a package for making data manipulation easier. More on `dplyr` later. `dplyr` is part of `tidyverse`, so it is already installed on your machine. You can load it individually, or with the other tidyverse packages like this:
 
@@ -57,7 +57,8 @@ You also have to load any data you want to use each time you start a new R sessi
 
 
 ~~~{.r}
-gapminder <- read_csv('data/gapminder-FiveYearData.csv')
+download.file("https://raw.githubusercontent.com/germs-lab/gapminder-R/master/data/raw_data/gapminder.csv", destfile="gapminder.csv", method="auto")
+gapminder <- read_csv('gapminder.csv')
 class(gapminder)
 ~~~
 
@@ -130,7 +131,7 @@ There are five actions we often want to apply to a tabular dataset:
 - Make new columns
 - Summarize groups
 
-We are about to see how to do each of those things using the `dplyr` package. Everything we're going to learn to do can also be done using "base R", but `dplyr` makes it easier, and the syntax is consistent, and it actually makes the computations faster. 
+We are about to see how to do each of those things using the `dplyr` package. Everything we're going to learn to do can also be done using "base R", but `dplyr` makes it easier, and the syntax is consistent, and it actually makes the computations faster.
 
 #### `filter()`
 
@@ -218,7 +219,7 @@ unique(gapminder$country)
 
 ~~~
 
-Okay, now we want to see just the rows of the data.frame where country is "United States". The syntax for all `dplyr` functions is the same: The first argument is the data.frame, the rest of the arguments are whatever you want to do in that data.frame. 
+Okay, now we want to see just the rows of the data.frame where country is "United States". The syntax for all `dplyr` functions is the same: The first argument is the data.frame, the rest of the arguments are whatever you want to do in that data.frame.
 
 
 ~~~{.r}
@@ -264,7 +265,7 @@ filter(gapminder, country == "United States" & year > 2000)
 
 ~~~
 
-We can also use "or" conditions with the vertical pipe: `|`. Notice that the variable (column) names don't go in quotes, but values of character variables do. 
+We can also use "or" conditions with the vertical pipe: `|`. Notice that the variable (column) names don't go in quotes, but values of character variables do.
 
 
 ~~~{.r}
@@ -297,7 +298,7 @@ A good, handy reference list for the operators (and, or, etc) can be found [here
 
 `filter` returned a subset of the data.frame's rows. `select` returns a subset of the data.frame's columns.
 
-Suppose we only want to see country and life expectancy. 
+Suppose we only want to see country and life expectancy.
 
 
 ~~~{.r}
@@ -398,12 +399,12 @@ USdata
 > **Advanced** How would you determine the median population for the North American countries between 1970 and 1980?
 >
 > **Bonus** This can be done using base R's subsetting, but this class doesn't teach how. Do the original challenge without the `filter` and `select` functions. Feel free to consult Google, helpfiles, etc. to figure out how.
-> 
+>
 
 
 #### `arrange()`
 
-You can order the rows of a data.frame by a variable using `arrange`. Suppose we want to see the most populous countries: 
+You can order the rows of a data.frame by a variable using `arrange`. Suppose we want to see the most populous countries:
 
 
 ~~~{.r}
@@ -489,7 +490,7 @@ arrange(gapminder, desc(year), desc(gdpPercap))
 
 #### `mutate()`
 
-We have learned how to drop rows, drop columns, and rearrange rows. To make a new column we use the `mutate` function. As usual, the first argument is a data.frame. The second argument is the name of the new column you want to create, followed by an equal sign, followed by what to put in that column. You can reference other variables in the data.frame, and `mutate` will treat each row independently. E.g. we can calculate the total GDP of each country in each year by multiplying the per-capita GDP by the population. 
+We have learned how to drop rows, drop columns, and rearrange rows. To make a new column we use the `mutate` function. As usual, the first argument is a data.frame. The second argument is the name of the new column you want to create, followed by an equal sign, followed by what to put in that column. You can reference other variables in the data.frame, and `mutate` will treat each row independently. E.g. we can calculate the total GDP of each country in each year by multiplying the per-capita GDP by the population.
 
 
 ~~~{.r}
@@ -524,7 +525,7 @@ Also, you can create multiple columns in one call to `mutate`, even using variab
 
 
 ~~~{.r}
-gapminder = mutate(gapminder, 
+gapminder = mutate(gapminder,
                    total_gdp = gdpPercap * pop,
                    log_gdp = log10(total_gdp))
 ~~~
@@ -536,7 +537,7 @@ gapminder = mutate(gapminder,
 >
 > - Tip: The `gdpPercap` variable is annual gdp. You'll need to adjust.
 > - Tip: For complex tasks, it often helps to use pencil and paper to write/draw/map the various steps needed and how they fit together before writing any code.
-> 
+>
 > What is the annual per-capita gdp, rounded to the nearest dollar, of the first row in the data.frame?
 >
 > a. $278
@@ -581,7 +582,7 @@ lifeExpGreater80 = filter(gapminder, lifeExp > 80)
 
 ~~~
 
-In this case it doesn't much matter, but we make a whole new data.frame (`lifeExpGreater80`) and only use it once; that's a little wasteful of system resources, and it clutters our environment. If the data are large, that can be a big problem. 
+In this case it doesn't much matter, but we make a whole new data.frame (`lifeExpGreater80`) and only use it once; that's a little wasteful of system resources, and it clutters our environment. If the data are large, that can be a big problem.
 
 Or, we could nest each function so that it appears on one line:
 
@@ -642,7 +643,7 @@ filter(gapminder, lifeExp > 80) %>%
 
 ~~~
 
-To demonstrate how it works, here are some examples where it's unnecessary. 
+To demonstrate how it works, here are some examples where it's unnecessary.
 
 
 ~~~{.r}
@@ -669,7 +670,7 @@ To demonstrate how it works, here are some examples where it's unnecessary.
 
 ~~~
 
-Whatever goes through the pipe becomes the first argument of the function after the pipe. This is convenient, because all `dplyr` functions produce a data.frame as their output and take a data.frame as the first argument. Since R ignores white-space, we can put each function on a new line, which RStudio will automatically indent, making everything easy to read. Now each line represents a step in a sequential operation. You can read this as "Take the gapminder data.frame, filter to the rows where lifeExp is greater than 80, and arrange by gdpPercap." 
+Whatever goes through the pipe becomes the first argument of the function after the pipe. This is convenient, because all `dplyr` functions produce a data.frame as their output and take a data.frame as the first argument. Since R ignores white-space, we can put each function on a new line, which RStudio will automatically indent, making everything easy to read. Now each line represents a step in a sequential operation. You can read this as "Take the gapminder data.frame, filter to the rows where lifeExp is greater than 80, and arrange by gdpPercap."
 
 
 ~~~{.r}
@@ -710,7 +711,7 @@ Making your code easier for humans to read will save you lots of time. The human
 
 #### `summarize()`
 
-Often we want to calculate a new variable, but rather than keeping each row as an independent observation, we want to group observations together to calculate some summary statistic. To do this we need two functions, one to do the grouping and one to calculate the summary statistic: `group_by` and `summarize`. By itself `group_by` doesn't change a data.frame; it just sets up the grouping. `summarize` then goes over each group in the data.frame and does whatever calculation you want. E.g. suppose we want the average global gdp for each year. While we're at it, let's calculate the mean and median and see how they differ. 
+Often we want to calculate a new variable, but rather than keeping each row as an independent observation, we want to group observations together to calculate some summary statistic. To do this we need two functions, one to do the grouping and one to calculate the summary statistic: `group_by` and `summarize`. By itself `group_by` doesn't change a data.frame; it just sets up the grouping. `summarize` then goes over each group in the data.frame and does whatever calculation you want. E.g. suppose we want the average global gdp for each year. While we're at it, let's calculate the mean and median and see how they differ.
 
 
 ~~~{.r}
@@ -747,10 +748,10 @@ There are several different summary statistics that can be generated from our da
 
 ~~~{.r}
 gapminder %>%
-  filter(!is.na(someColumn)) 
+  filter(!is.na(someColumn))
 ~~~
 
-The `!` symbol negates it, so we're asking for everything that is not an `NA`. 
+The `!` symbol negates it, so we're asking for everything that is not an `NA`.
 
 
 We often want to calculate the number of entries within a group. E.g. we might wonder if our dataset is balanced by country. We can do this with the `n()` function, or `dplyr` provides a `count` function as a convenience:
@@ -867,7 +868,7 @@ which.max(c(1, 7, 4))
 
 ~~~
 
-Now, back to the question: Where lifeExp is at a maximum, what is the entry in country? 
+Now, back to the question: Where lifeExp is at a maximum, what is the entry in country?
 
 
 ~~~{.r}
@@ -903,20 +904,20 @@ Groups: continent [?]
 
 > #### Challenge -- Part 1 {.challenge}
 >
-> - Calculate a new column: the total GDP of each country in each year. 
+> - Calculate a new column: the total GDP of each country in each year.
 > - Calculate the variance -- `var()` of countries' gdps in each year.
 > - Is country-level GDP getting more or less equal over time?
 > - Plot your findings.
-> 
+>
 
 > #### Challenge -- Part 2 {.challenge}
-> 
+>
 > - Modify the code you just wrote to calculate the variance in both country-level GDP and per-capita GDP.
 > - Do both measures support the conclusion you arrived at above?
-> 
+>
 
 > #### Challenge -- Part 3 (Advanced) {.challenge}
-> 
+>
 > The above plotting exercise asked you to plot summarized information, but it is generally preferable to avoid summarizing before plotting. Can you generate a plot that shows the information you calculated in Part 1 without summarizing?  
 >
 > - Hint: `ggplot` interprets the `gapminder$year` as a numeric variable, which may be okay, but there are some plot types for which you need `ggplot` to see `gapminder$year` as a category. You can accomplish this by wrapping it in `factor` -- e.g. `ggplot(gapminder, aes(x = factor(year) ...`
@@ -935,7 +936,7 @@ That is the core of `dplyr`'s functionality, but it does more. RStudio makes a g
 > - Remove the continent column
 > - Make a scatter plot of gdpPercap vs. population colored by country
 >
-> 
+>
 > ~~~{.r}
 > oc1980 = filter(gapminder, continent == "Oceania" & year > 1980)
 > oc1980less = select(oc1980, -continent)
@@ -943,36 +944,36 @@ That is the core of `dplyr`'s functionality, but it does more. RStudio makes a g
 > ggplot(oc1980less, aes(x = gdpPercap, y = lifeExp, color = country)) +
 >   geom_point()
 > ~~~
-> 
+>
 > <img src="fig/challenge subsetting a-1.png" title="plot of chunk challenge subsetting a" alt="plot of chunk challenge subsetting a" style="display: block; margin: auto;" />
 >
 > **Advanced** How would you determine the median population for the North American countries between 1970 and 1980?
 >
-> 
+>
 > ~~~{.r}
-> noAm = filter(gapminder, country == "United States" | 
->                 country == "Canada" | country == "Mexico" | 
+> noAm = filter(gapminder, country == "United States" |
+>                 country == "Canada" | country == "Mexico" |
 >                 country == "Puerto Rico" & (year > 1970 & year < 1980)
 >               )
 > noAmPop = select(noAm, pop)
 > median(noAmPop)
 > ~~~
-> 
-> 
-> 
+>
+>
+>
 > ~~~{.output}
 > Error in median.default(noAmPop): need numeric data
-> 
+>
 > ~~~
-> 
-> 
-> 
+>
+>
+>
 > ~~~{.r}
 > noAmPop
 > ~~~
-> 
-> 
-> 
+>
+>
+>
 > ~~~{.output}
 > # A tibble: 38 × 1
 >         pop
@@ -988,38 +989,38 @@ That is the core of `dplyr`'s functionality, but it does more. RStudio makes a g
 > 9  28523502
 > 10 30305843
 > # ... with 28 more rows
-> 
+>
 > ~~~
-> 
-> 
-> 
+>
+>
+>
 > ~~~{.r}
 > as.integer(noAmPop)
 > ~~~
-> 
-> 
-> 
+>
+>
+>
 > ~~~{.output}
 > Error in eval(expr, envir, enclos): (list) object cannot be coerced to type 'integer'
-> 
+>
 > ~~~
-> 
-> 
-> 
+>
+>
+>
 > ~~~{.r}
 > median(unlist(noAmPop))
 > ~~~
-> 
-> 
-> 
+>
+>
+>
 > ~~~{.output}
 > [1] 59872135
-> 
+>
 > ~~~
 >
 > **Bonus** This can be done using base R's subsetting, but this class doesn't teach how. Do the original challenge without the `filter` and `select` functions. Feel free to consult Google, helpfiles, etc. to figure out how.
-> 
-> 
+>
+>
 > ~~~{.r}
 > noAm2 = gapminder[(gapminder$country == "United States") |
 >                     (gapminder$country == "Mexico") |
@@ -1029,12 +1030,12 @@ That is the core of `dplyr`'s functionality, but it does more. RStudio makes a g
 >                     (gapminder$year < 1980)),]
 > median(noAm2$pop)
 > ~~~
-> 
-> 
-> 
+>
+>
+>
 > ~~~{.output}
 > [1] 59872135
-> 
+>
 > ~~~
 >
 
@@ -1044,49 +1045,49 @@ That is the core of `dplyr`'s functionality, but it does more. RStudio makes a g
 >
 > - Tip: The `gdpPercap` variable is annual gdp. You'll need to adjust.
 > - Tip: For complex tasks, it often helps to use pencil and paper to write/draw/map the various steps needed and how they fit together before writing any code.
-> 
+>
 > What is the annual per-capita gdp, rounded to the nearest dollar, of the first row in the data.frame?
 >
 > a. $278
 > b. $312
 > c. $331
 > d. $339
-> 
-> 
+>
+>
 > ~~~{.r}
 > dailyGDP = mutate(gapminder, onedayGDP = gdpPercap / 365)
 > dailyGDP = filter(dailyGDP, onedayGDP < 1)
 > dailyGDP = select(dailyGDP, country, year, gdpPercap)
 > dailyGDP[1,]
 > ~~~
-> 
-> 
-> 
+>
+>
+>
 > ~~~{.output}
 > # A tibble: 1 × 3
 >   country  year gdpPercap
 >     <chr> <int>     <dbl>
 > 1 Burundi  1952  339.2965
-> 
+>
 > ~~~
 >
 > **Advanced**: Use dplyr functions and ggplot to plot per-capita GDP versus population for North American countries after 1970.
 > - Once you've made the graph, transform both axes to a log10 scale. There are two ways to do this, one by creating new columns in the data frame, and another using functions provided by ggplot to transform the axes. Implement both, in that order. Which do you prefer and why?
 >
-> 
+>
 > ~~~{.r}
-> noAm = filter(gapminder, country == "United States" | 
->                 country == "Canada" | country == "Mexico" | 
+> noAm = filter(gapminder, country == "United States" |
+>                 country == "Canada" | country == "Mexico" |
 >                 country == "Puerto Rico" & year > 1970
 >               )
 > ggplot(noAm, aes(x = gdpPercap, y = pop, color = country)) +
->   geom_point() + 
+>   geom_point() +
 >   scale_x_log10() +
 >   scale_y_log10()
 > ~~~
-> 
+>
 > <img src="fig/data reduction B-1.png" title="plot of chunk data reduction B" alt="plot of chunk data reduction B" style="display: block; margin: auto;" />
-> 
+>
 > ~~~{.r}
 > # OR
 > noAmlog10 = mutate(noAm, log10pop = log10(pop),
@@ -1094,7 +1095,7 @@ That is the core of `dplyr`'s functionality, but it does more. RStudio makes a g
 > ggplot(noAmlog10, aes(x = log10gdp, y = log10pop, color = country)) +
 >   geom_point()
 > ~~~
-> 
+>
 > <img src="fig/data reduction B-2.png" title="plot of chunk data reduction B" alt="plot of chunk data reduction B" style="display: block; margin: auto;" />
 >
 
@@ -1102,7 +1103,7 @@ That is the core of `dplyr`'s functionality, but it does more. RStudio makes a g
 >
 > Copy the code you (or the instructor) wrote to solve the previous MCQ Data Reduction challenge. Rewrite it using pipes (i.e. no assignment and no nested functions)
 >
-> 
+>
 > ~~~{.r}
 > # previous challenge with pipes
 > dailyGDP = mutate(gapminder, onedayGDP = gdpPercap / 365)
@@ -1115,19 +1116,19 @@ That is the core of `dplyr`'s functionality, but it does more. RStudio makes a g
 >   select(country, year, gdpPercap)
 > smallGDP[1,]
 > ~~~
-> 
-> 
-> 
+>
+>
+>
 > ~~~{.output}
 > # A tibble: 1 × 3
 >   country  year gdpPercap
 >     <chr> <int>     <dbl>
 > 1 Burundi  1952  339.2965
-> 
+>
 > ~~~
-> 
-> 
-> 
+>
+>
+>
 > ~~~{.r}
 > # OR, more fancy (without an intermediate temp variable)
 > (gapminder %>%
@@ -1135,26 +1136,26 @@ That is the core of `dplyr`'s functionality, but it does more. RStudio makes a g
 >   filter(onedayGDP < 1) %>%
 >   select(country, year, gdpPercap))[1,]
 > ~~~
-> 
-> 
-> 
+>
+>
+>
 > ~~~{.output}
 > # A tibble: 1 × 3
 >   country  year gdpPercap
 >     <chr> <int>     <dbl>
 > 1 Burundi  1952  339.2965
-> 
+>
 > ~~~
 >
 
 > #### Challenge -- Part 1 {.challenge}
 >
-> - Calculate a new column: the total GDP of each country in each year. 
+> - Calculate a new column: the total GDP of each country in each year.
 > - Calculate the variance -- `var()` of countries' gdps in each year.
 > - Is country-level GDP getting more or less equal over time?
 > - Plot your findings.
-> 
-> 
+>
+>
 > ~~~{.r}
 > varGDP = gapminder %>%
 >   mutate(totalGDP = gdpPercap * pop) %>%
@@ -1163,16 +1164,16 @@ That is the core of `dplyr`'s functionality, but it does more. RStudio makes a g
 > ggplot(varGDP, aes(x = year, y = varTotGDP)) +
 >   geom_point()
 > ~~~
-> 
+>
 > <img src="fig/challenge LessonEnd part1-1.png" title="plot of chunk challenge LessonEnd part1" alt="plot of chunk challenge LessonEnd part1" style="display: block; margin: auto;" />
 >
 
 > #### Challenge -- Part 2 {.challenge}
-> 
+>
 > - Modify the code you just wrote to calculate the variance in both country-level GDP and per-capita GDP.
 > - Do both measures support the conclusion you arrived at above?
-> 
-> 
+>
+>
 > ~~~{.r}
 > varGDP = gapminder %>%
 >   mutate(totalGDP = gdpPercap * pop) %>%
@@ -1184,24 +1185,24 @@ That is the core of `dplyr`'s functionality, but it does more. RStudio makes a g
 >   geom_point(color = "red", aes(x = year, y = varTotGDP)) +
 >   geom_point(color = "blue", aes(x = year, y = varPerCapGDP))
 > ~~~
-> 
+>
 > <img src="fig/challenge LessonEnd part2-1.png" title="plot of chunk challenge LessonEnd part2" alt="plot of chunk challenge LessonEnd part2" style="display: block; margin: auto;" />
 
 > #### Challenge -- Part 3 (Advanced) {.challenge}
-> 
+>
 > The above plotting exercise asked you to plot summarized information, but it is generally preferable to avoid summarizing before plotting. Can you generate a plot that shows the information you calculated in Part 1 without summarizing?  
 >
 > - Hint: `ggplot` interprets the `gapminder$year` as a numeric variable, which may be okay, but there are some plot types for which you need `ggplot` to see `gapminder$year` as a category. You can accomplish this by wrapping it in `factor` -- e.g. `ggplot(gapminder, aes(x = factor(year) ...`
 >
 >
-> 
+>
 > ~~~{.r}
 > gapminder %>%
 >   mutate(totalGDP = gdpPercap * pop) %>%
 > ggplot(aes(x = factor(year), y = totalGDP)) +
 >   geom_violin() +
->   scale_y_log10() 
+>   scale_y_log10()
 > ~~~
-> 
+>
 > <img src="fig/challenge LessonEnd part3-1.png" title="plot of chunk challenge LessonEnd part3" alt="plot of chunk challenge LessonEnd part3" style="display: block; margin: auto;" />
 >
