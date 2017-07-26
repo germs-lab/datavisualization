@@ -48,12 +48,6 @@ library(tidyverse)
 ~~~
 
 
-> #### Challenge -- Install and load tidyverse {.challenge}
->
-> - Install the `tidyverse` package, either with `install.packages('tidyverse')` or via the menu bar: Tools -> Install Packages...  
-> - Load `tidyverse` with `library(tidyverse)`  
->   - You will see some warnings about conflicts. That's okay.
-
 ### First plots
 
 The key to understanding ggplot is thinking about a figure in layers:
