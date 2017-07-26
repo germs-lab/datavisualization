@@ -256,8 +256,7 @@ read.csv('gapminder.csv')
 
 Whoa! What just happened? R executed the function and printed the result, just like when you enter `log(1)`. How do you store an object to a variable?
 
-```{r}
-
+```{r, eval=FALSE}
 gapminder <- read.csv('gapminder.csv')
 ```
 

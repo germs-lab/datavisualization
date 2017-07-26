@@ -460,21 +460,6 @@ Whoa! What just happened? R executed the function and printed the result, just l
 gapminder <- read.csv('gapminder.csv')
 ~~~
 
-
-
-~~~{.output}
-Warning in file(file, "rt"): cannot open file 'gapminder.csv': No such file
-or directory
-
-~~~
-
-
-
-~~~{.output}
-Error in file(file, "rt"): cannot open the connection
-
-~~~
-
 Now, a data.frame called `gapminder` is in my Environment, and I can see that it is a data.frame with 1704 rows and 6 columns. 
 
 
