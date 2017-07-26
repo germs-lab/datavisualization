@@ -43,7 +43,6 @@ You first have to load it in your R session. For that, use the `library` functio
 
 
 ~~~{.r}
-install.packages('tidyverse')
 library(tidyverse)
 ~~~
 
@@ -106,7 +105,7 @@ Error in eval(expr, envir, enclos): could not find function "ggplot"
 > Modify the following code to make a figure that shows how life expectancy has
 > changed over time:
 >
->
+> 
 > ~~~{.r}
 > ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
 > geom_point()
@@ -537,16 +536,16 @@ code to modify!
 > Modify the example so that the figure visualize how life expectancy has
 > changed over time:
 >
->
+> 
 > ~~~{.r}
 > ggplot(gapminder, aes(x = year, y = lifeExp)) + geom_point()
 > ~~~
->
->
->
+> 
+> 
+> 
 > ~~~{.output}
 > Error in eval(expr, envir, enclos): could not find function "ggplot"
->
+> 
 > ~~~
 >
 
@@ -558,17 +557,17 @@ code to modify!
 > code from the previous challenge to **color** the points by the "continent"
 > column. What trends do you see in the data? Are they what you expected?
 >
->
+> 
 > ~~~{.r}
 > ggplot(gapminder, aes(x = year, y = lifeExp, color=continent)) +
 >   geom_point()
 > ~~~
->
->
->
+> 
+> 
+> 
 > ~~~{.output}
 > Error in eval(expr, envir, enclos): could not find function "ggplot"
->
+> 
 > ~~~
 >
 
@@ -577,17 +576,17 @@ code to modify!
 > Switch the order of the point and line layers from the previous example. What
 > happened?
 >
->
+> 
 > ~~~{.r}
 > ggplot(gapminder, aes(x=year, y=lifeExp, by=country)) +
 >  geom_point() + geom_line(aes(color=continent))
 > ~~~
->
->
->
+> 
+> 
+> 
 > ~~~{.output}
 > Error in eval(expr, envir, enclos): could not find function "ggplot"
->
+> 
 > ~~~
 >
 > The lines now get drawn over the points!
@@ -601,18 +600,18 @@ code to modify!
 >
 > Hint: do not use the `aes` function.
 >
->
+> 
 > ~~~{.r}
 > ggplot(gapminder, aes(x = lifeExp, y = gdpPercap)) +
 >  geom_point(size=3, color="orange") + scale_y_log10() +
 >  geom_smooth(method="lm", size=1.5)
 > ~~~
->
->
->
+> 
+> 
+> 
 > ~~~{.output}
 > Error in eval(expr, envir, enclos): could not find function "ggplot"
->
+> 
 > ~~~
 >
 
@@ -624,16 +623,16 @@ code to modify!
 >  - Transform the x axis to better visualize the data spread.
 >  - Add a facet layer to panel the density plots by year.
 >
->
+> 
 > ~~~{.r}
 > ggplot(gapminder, aes(x = gdpPercap, fill=continent)) +
 >  geom_density(alpha=0.6) + facet_wrap( ~ year) + scale_x_log10()
 > ~~~
->
->
->
+> 
+> 
+> 
 > ~~~{.output}
 > Error in eval(expr, envir, enclos): could not find function "ggplot"
->
+> 
 > ~~~
 >
