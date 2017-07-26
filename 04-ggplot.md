@@ -62,12 +62,6 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
 ~~~
 
 
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
-
 The first thing we do is call the `ggplot` function. This function tells ggplot what dataset we're using (gapminder) and how to map variables in gapminder to the plotting "canvas" (gdp to the x-axis, life expectancy to the y-axis). That **mapping** of variables to plot elements is done through the `aes` function. Arguments to `aes` will be variable names from the `data.frame` passed to `ggplot`. If you need a reminder of what's in our data.frame, use `str(gapminder)`.
 
 By itself, the call to `ggplot` isn't enough to draw a figure. This sets up the canvas correctly, but it doesn't draw anything on it.
@@ -90,12 +84,6 @@ ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
   geom_point()
 ~~~
 
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
 
 > #### Challenge -- Changing a variable {.challenge}
 >
@@ -132,12 +120,6 @@ ggplot(gapminder, aes(x = year, y = lifeExp, color = continent)) +
 ~~~
 
 
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
-~~~
-
 Hmm, that's not quite right. What has happened there? How many lines are there?
 
 The lines are grouped by continent. We wanted one line per country, but we got one line per continent because we mapped continent to color and `ggplot` assumes we want to group by the coloring variable unless we tell it otherwise. To get one line per country we tell ggplot explicitly to group by country. Just like the other aesthetic mappings, that goes in the `aes()` function:
@@ -161,13 +143,6 @@ want colored lines but black points, we can move the mapping of continent-to-col
 ggplot(gapminder, aes(x = year, y = lifeExp, group = country)) +
     geom_point() +
     geom_line(aes(color = continent))
-~~~
-
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
 ~~~
 
 Note that each layer is drawn on top of the previous layer. If we want the points on top of the lines, we can move `geom_point` to after `geom_line`:
@@ -290,26 +265,12 @@ library(ggthemes)
 
 
 
-~~~{.output}
-Error in library(ggthemes): there is no package called 'ggthemes'
-
-~~~
-
-
-
 ~~~{.r}
 ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
     geom_point(aes(color = continent)) +
     scale_x_log10() +
     geom_smooth(method = 'lm') +
     theme_economist()
-~~~
-
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "theme_economist"
-
 ~~~
 
 
@@ -359,13 +320,6 @@ That's a mess! It's hard to see patterns because there is so much information on
 ggplot(gapminder, aes(x = year, y = lifeExp, by = country)) +
     geom_line(aes(color = continent)) +
     facet_wrap(~ continent)
-~~~
-
-
-
-~~~{.output}
-Error in eval(expr, envir, enclos): could not find function "ggplot"
-
 ~~~
 
 
@@ -469,13 +423,7 @@ code to modify!
 > ggplot(gapminder, aes(x = year, y = lifeExp)) + geom_point()
 > ~~~
 >
->
->
-> ~~~{.output}
-> Error in eval(expr, envir, enclos): could not find function "ggplot"
->
-> ~~~
->
+
 
 > #### Solution to challenge 2 {.challenge}
 >
@@ -491,13 +439,7 @@ code to modify!
 >   geom_point()
 > ~~~
 >
->
->
-> ~~~{.output}
-> Error in eval(expr, envir, enclos): could not find function "ggplot"
->
-> ~~~
->
+
 
 > #### Solution to challenge 3 {.challenge}
 >
@@ -510,12 +452,7 @@ code to modify!
 >  geom_point() + geom_line(aes(color=continent))
 > ~~~
 >
->
->
-> ~~~{.output}
-> Error in eval(expr, envir, enclos): could not find function "ggplot"
->
-> ~~~
+
 >
 > The lines now get drawn over the points!
 >
@@ -535,13 +472,7 @@ code to modify!
 >  geom_smooth(method="lm", size=1.5)
 > ~~~
 >
->
->
-> ~~~{.output}
-> Error in eval(expr, envir, enclos): could not find function "ggplot"
->
-> ~~~
->
+
 
 > #### Solution to challenge 5 {.challenge}
 >
@@ -555,12 +486,5 @@ code to modify!
 > ~~~{.r}
 > ggplot(gapminder, aes(x = gdpPercap, fill=continent)) +
 >  geom_density(alpha=0.6) + facet_wrap( ~ year) + scale_x_log10()
-> ~~~
->
->
->
-> ~~~{.output}
-> Error in eval(expr, envir, enclos): could not find function "ggplot"
->
 > ~~~
 >

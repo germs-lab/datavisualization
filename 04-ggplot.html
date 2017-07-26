@@ -251,10 +251,6 @@ just like you might do in an image editing program like Photoshop, Illustrator, 
   geom_point()
 </code></pre>
 
-<pre><code class="output">Error in eval(expr, envir, enclos): could not find function &quot;ggplot&quot;
-
-</code></pre>
-
 <p>The first thing we do is call the <code>ggplot</code> function. This function tells ggplot what dataset we&#39;re using (gapminder) and how to map variables in gapminder to the plotting &ldquo;canvas&rdquo; (gdp to the x-axis, life expectancy to the y-axis). That <strong>mapping</strong> of variables to plot elements is done through the <code>aes</code> function. Arguments to <code>aes</code> will be variable names from the <code>data.frame</code> passed to <code>ggplot</code>. If you need a reminder of what&#39;s in our data.frame, use <code>str(gapminder)</code>.</p>
 
 <p>By itself, the call to <code>ggplot</code> isn&#39;t enough to draw a figure. This sets up the canvas correctly, but it doesn&#39;t draw anything on it.</p>
@@ -271,10 +267,6 @@ In our example, we used <code>geom_point</code>, which tells <code>ggplot</code>
 
 <pre><code class="r">ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
   geom_point()
-</code></pre>
-
-<pre><code class="output">Error in eval(expr, envir, enclos): could not find function &quot;ggplot&quot;
-
 </code></pre>
 
 <blockquote>
@@ -307,10 +299,6 @@ each country:</p>
     geom_line()
 </code></pre>
 
-<pre><code class="output">Error in eval(expr, envir, enclos): could not find function &quot;ggplot&quot;
-
-</code></pre>
-
 <p>Hmm, that&#39;s not quite right. What has happened there? How many lines are there?</p>
 
 <p>The lines are grouped by continent. We wanted one line per country, but we got one line per continent because we mapped continent to color and <code>ggplot</code> assumes we want to group by the coloring variable unless we tell it otherwise. To get one line per country we tell ggplot explicitly to group by country. Just like the other aesthetic mappings, that goes in the <code>aes()</code> function:</p>
@@ -330,10 +318,6 @@ want colored lines but black points, we can move the mapping of continent-to-col
 <pre><code class="r">ggplot(gapminder, aes(x = year, y = lifeExp, group = country)) +
     geom_point() +
     geom_line(aes(color = continent))
-</code></pre>
-
-<pre><code class="output">Error in eval(expr, envir, enclos): could not find function &quot;ggplot&quot;
-
 </code></pre>
 
 <p>Note that each layer is drawn on top of the previous layer. If we want the points on top of the lines, we can move <code>geom_point</code> to after <code>geom_line</code>:</p>
@@ -452,19 +436,11 @@ x-axis.</p>
 <pre><code class="r">library(ggthemes)
 </code></pre>
 
-<pre><code class="output">Error in library(ggthemes): there is no package called &#39;ggthemes&#39;
-
-</code></pre>
-
 <pre><code class="r">ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
     geom_point(aes(color = continent)) +
     scale_x_log10() +
     geom_smooth(method = &#39;lm&#39;) +
     theme_economist()
-</code></pre>
-
-<pre><code class="output">Error in eval(expr, envir, enclos): could not find function &quot;theme_economist&quot;
-
 </code></pre>
 
 <h4>Changing fixed aspects of plots</h4>
@@ -504,10 +480,6 @@ countries in one plot.</p>
 <pre><code class="r">ggplot(gapminder, aes(x = year, y = lifeExp, by = country)) +
     geom_line(aes(color = continent)) +
     facet_wrap(~ continent)
-</code></pre>
-
-<pre><code class="output">Error in eval(expr, envir, enclos): could not find function &quot;ggplot&quot;
-
 </code></pre>
 
 <h3>Modifying text</h3>
@@ -593,10 +565,6 @@ changed over time:</p>
 <pre><code class="r">ggplot(gapminder, aes(x = year, y = lifeExp)) + geom_point()
 </code></pre>
 
-<pre><code class="output">Error in eval(expr, envir, enclos): could not find function &quot;ggplot&quot;
-
-</code></pre>
-
 <h4>Solution to challenge 2 {.challenge}</h4>
 
 <p>In the previous examples and challenge we&#39;ve used the <code>aes</code> function to tell
@@ -609,10 +577,6 @@ column. What trends do you see in the data? Are they what you expected?</p>
   geom_point()
 </code></pre>
 
-<pre><code class="output">Error in eval(expr, envir, enclos): could not find function &quot;ggplot&quot;
-
-</code></pre>
-
 <h4>Solution to challenge 3 {.challenge}</h4>
 
 <p>Switch the order of the point and line layers from the previous example. What
@@ -620,10 +584,6 @@ happened?</p>
 
 <pre><code class="r">ggplot(gapminder, aes(x=year, y=lifeExp, by=country)) +
  geom_point() + geom_line(aes(color=continent))
-</code></pre>
-
-<pre><code class="output">Error in eval(expr, envir, enclos): could not find function &quot;ggplot&quot;
-
 </code></pre>
 
 <p>The lines now get drawn over the points!</p>
@@ -640,10 +600,6 @@ example.</p>
  geom_smooth(method=&quot;lm&quot;, size=1.5)
 </code></pre>
 
-<pre><code class="output">Error in eval(expr, envir, enclos): could not find function &quot;ggplot&quot;
-
-</code></pre>
-
 <h4>Solution to challenge 5 {.challenge}</h4>
 
 <p>Create a density plot of GDP per capita, filled by continent.</p>
@@ -657,10 +613,6 @@ example.</p>
 
 <pre><code class="r">ggplot(gapminder, aes(x = gdpPercap, fill=continent)) +
  geom_density(alpha=0.6) + facet_wrap( ~ year) + scale_x_log10()
-</code></pre>
-
-<pre><code class="output">Error in eval(expr, envir, enclos): could not find function &quot;ggplot&quot;
-
 </code></pre>
 </blockquote>
 
